@@ -22,7 +22,7 @@ module.exports= {
 
     //DATABASE CONNECTION PARAMS
     database: {
-            default : "mysql",
+            default : "mysql", //writer driver name like mysql, sqlite, psql
             /*
              *
              */
@@ -48,15 +48,6 @@ module.exports= {
                     password:"root",
                     name: "express_life",
                     port: "6969",//5432
-                    suffix : ""
-                },
-                mongodb : {
-                    createIfNotExist : true,
-                    host : "localhost",
-                    user: "root",
-                    password:"",
-                    name: "",
-                    port: "",
                     suffix : ""
                 }
             }

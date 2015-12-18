@@ -5,7 +5,9 @@ Fast, unopinionated, minimalist web framework for [node](http://nodejs.org).
 ## Installation
 
 ```bash
-$ npm install elife
+git clone https://github.com/DIMLEO/express-life.git <project name>
+cd <project name>
+npm install
 ```
 
 ## Configuration : app/bootstrap/app.js
