@@ -14,11 +14,12 @@ module.exports = function(View, Env, Filre){
     routes.put = {};
 
     routes.all = {
-        '/test': function (req, res) {
+        '/welcome': function (req, res) {
             res.send(
-                View.make('test.blade', {
-                        lname : "DIARRA",
-                        fname : "Mamdou"
+                View.make('display/welcome.blade', {
+                        lname : "DJON",
+                        fname : "Doe",
+                        title : 'Express Life'
                     })
             );
         }
