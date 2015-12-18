@@ -2,12 +2,15 @@
 
 Fast, unopinionated, minimalist web framework for [node](http://nodejs.org).
 
+
+# Getting Started
+
 ## Installation
 
 ```bash
-git clone https://github.com/DIMLEO/express-life.git <project name>
-cd <project name>
-npm install
+    git clone https://github.com/DIMLEO/express-life.git <project name>
+    cd <project name>
+    npm install
 ```
 
 ## Configuration : app/bootstrap/app.js

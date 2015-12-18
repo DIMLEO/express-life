@@ -10,7 +10,7 @@
  * $myModule = require('../MyModule')
  */
 
-if($Environement.database.default.length > 0) {
+if($Environement.database.default) {
     /*
      * in app/boostrap/app.js
      *
@@ -58,7 +58,6 @@ if($Environement.database.default.length > 0) {
     var item = undefined;
 
     for (var index in modelsFileList) {
-        if (/^\./.test(modelsFileList[index])) continue;
         item = require($Environement.path.models + '/' + modelsFileList[index]);
         //console.log(item)
         if (item.name) $Model[item.name] = item;
@@ -82,7 +81,6 @@ if($Environement.database.default.length > 0) {
 
     for (var i in modelLoadIsFileList) {
         var className = modelLoadIsFileList[i];
-        if (!className || !$Model[className]) continue;
         if (!$Model[className].extra) {
             $Model[className].extra = {
                 soft_delete: true,
@@ -98,4 +96,5 @@ if($Environement.database.default.length > 0) {
 
     delete item;
     delete modelsFileList;
+
 }

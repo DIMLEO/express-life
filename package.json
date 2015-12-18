@@ -1,6 +1,6 @@
 {
   "name": "elife",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Express life // jump start your web application with express",
   "main": "index.js",
   "scripts": {
@@ -30,8 +30,12 @@
         "express": "^4.13.3",
         "type-of-is": "~3.4.0",
         "elife-dim" : "^1.0.0",
-        "postgrey" : "latest",
+        "body-parser" : "latest",
+        "cookie-parser" : "latest",
+        "multer" :  "latest",
+        "multiparty" : "latest",
         "mysql" : "latest",
-        "sqlite" : "latest"
+        "pg" : "latest",
+        "sqlite3" : "latest"
     }
 }

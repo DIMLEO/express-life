@@ -1,12 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <title>Express-life Start</title>
+    <style>
+        @font-face {
+            font-family: 'Lato';
+            font-style: normal;
+            font-weight: 100;
+            src: local('Lato Hairline'), local('Lato-Hairline'), url(css/fonts/font.woff2) format('woff2');
+        }
+        html, body {
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            display: table;
+            font-weight: 100;
+            font-family: 'Lato';
+        }
+        .container {
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        .content {
+            text-align: center;
+        }
+        .title {
+            font-size: 96px;
+            text-align : center;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <title>Express Life</title>
 </head>
 <body>
 
-    <h1>Express Life 1.0</h1>
-        <a href = "welcome">Try Welcome</a>
+<div class="content" style = "padding-top : 50px;" >
+    <div class="title">Express Life 1.0</div>
+    <a href = '/welcome' >Welcome Page</a>
+</div>
+
 </body>
 </html>

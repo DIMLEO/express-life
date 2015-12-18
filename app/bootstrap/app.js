@@ -4,6 +4,8 @@ module.exports= {
 
     port: 8080,
 
+    faveicon : "",
+
     /*
      * do not forget to change the port in the Host
      */
@@ -13,7 +15,7 @@ module.exports= {
 
     bladeExtends : ['life.extends.js'],
 
-    global : ['life.fn.js', 'prototype.js', 'dependencies.js'],
+    global : ['php.js', 'prototype.js', 'dependencies.js'],
 
     app: {
         name: "Express Life",
@@ -22,8 +24,10 @@ module.exports= {
 
     //DATABASE CONNECTION PARAMS
     database: {
-            default : "mysql", //writer driver name like mysql, sqlite, psql
+            default : "",
             /*
+             *
+             * default : "mysql",
              *
              */
             connections : {
@@ -48,6 +52,15 @@ module.exports= {
                     password:"root",
                     name: "express_life",
                     port: "6969",//5432
+                    suffix : ""
+                },
+                mongodb : {
+                    createIfNotExist : true,
+                    host : "localhost",
+                    user: "root",
+                    password:"",
+                    name: "",
+                    port: "",
                     suffix : ""
                 }
             }
@@ -81,6 +94,8 @@ module.exports= {
          */
         models                      :__dirname + '/../../app/models',
 
-        app                         :__dirname + '/..'
+        app                         :__dirname + '/..',
+
+        root                        :__dirname + '/..'
     }
 };

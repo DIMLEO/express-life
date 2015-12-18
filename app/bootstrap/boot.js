@@ -7,19 +7,48 @@ var app = express();
  * for global use in the project
  */
 $Express = express;
+
 $App = app;
-$Environement = undefined;
+
+$Environement = {};
+
 $Dim = undefined;
+
+$View = {};
+
+$Filters = {};
+
+$Routes = {};
+
+$dbsm = {};
+
+$_GET = {};
+
+$_POST = {};
+
+$_FILES = {};
+
+$_REQUEST = {};
+//$COOKIE = {};
 
 try {
 
     var env = require('./app.js');
     var dim = require('elife-dim')(env);
+
     $Environement = env;
     $Dim = dim;
 
+    var bodyParser = require('body-parser');
+    var multiparty = require('multiparty');
+
     //Serving static files with Express
     app.use(express.static(env.path.resources));
+
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(require('cookie-parser')());
+    app.use(bodyParser.json());
 
     if(env.template.toLowerCase() == 'blade'){
         var blade_extends = env.bladeExtends, global = env.global, extendsItem = undefined;
@@ -35,15 +64,52 @@ try {
         }
     }
 
+    $View = dim[env.template];
 
-    var filters = require(env.path.app + '/filters.js');
-    var routes = require(env.path.app + '/routes.js')(dim[env.template], env, filters);
+    $Filters = require(env.path.app + '/filters.js');
+
+    $Routes = require(env.path.app + '/routes.js')();
+
+    //
+    app.use(function(req, res, next){
+        $_REQUEST = {};
+        $_FILES = {};
+        $_POST = {};
+        $_GET = {};
+
+        if(req.method === 'GET'){
+            $_GET = (req.query)?req.query:{};
+            next();
+        }
+        else if(req.method === 'POST'){
+
+            $_POST = (req.body)?req.body:{};
+
+            var form = new multiparty.Form({uploadDir : $Environement.path.storage});
+
+            form.parse(req, function(err, fields, files) {
+
+                $_FILES = (files)?files:{};
+
+                for(var i in fields){
+
+                    if(is_array(fields[i]) && fields[i].length == 1) $_POST[i] = fields[i][0];
+
+                    else $_POST[i] = fields[i];
+                }
+
+                next();
+            });
+        }
+        $_REQUEST = req;
+    });
 
     var type = ['get', 'post', 'delete', 'put', 'all'];
+
     for (var index in type) {
         var method = type[index];
-        if (routes[method]) {
-            var data = routes[method];
+        if ($Routes[method]) {
+            var data = $Routes[method];
 
             for (var path in data) {
                 app[method](path, data[path]);
@@ -51,17 +117,27 @@ try {
         }
     }
 
+    if($Environement.faveicon){
+        var favicon = require('serve-favicon');
+        app.use(favicon($Environement.faveicon));
+    }
 
-}catch(e){
-    console.log('\x1b[31m-----------------------------------CAPTURE---------');
+
+
+}
+catch(e){
+
+    console.log('Express Life Erreur find');
     throw e;
-    console.log('-----------------------------------END OF CAPTURE-------\x1b[37m');
+
 }
 
 var server = app.listen(env.port, function () {
 
     /*
+     *
      * Faire tourner autre chose sur l'application
+     *
      */
 
 });

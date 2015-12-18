@@ -1,7 +1,4 @@
 module.exports = {
-    var_dump : function(varname){
-        return '';
-    },
     asset   : function(path){
         return $Environement.host+'/'+path;
     },
