@@ -14,7 +14,7 @@ $Dim = undefined;
 try {
 
     var env = require('./app.js');
-    var dim = require('dim')(env);
+    var dim = require('elife-dim')(env);
     $Environement = env;
     $Dim = dim;
 

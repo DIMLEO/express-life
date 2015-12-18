@@ -29,6 +29,6 @@
   "dependencies": {
         "express": "^4.13.3",
         "type-of-is": "~3.4.0",
-        "dim" : "https://github.com/DIMLEO/dim.git"
+        "elife-dim" : "^1.0.0"
     }
 }

@@ -70,7 +70,7 @@ for(var index in modelsFileList){
  * et les rendre accèsible dans tout le projet
  */
 
-$dbsm = require('dim/database')($Environement.database, $Model);
+$dbsm = require('elife-dim/database')($Environement.database, $Model);
 
 var storage_models = fs.readdirSync($Environement.path.storage+'/database/models');
 
