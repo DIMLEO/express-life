@@ -1,0 +1,29 @@
+@extends(layouts/admin.blade)
+
+
+@section(body)
+    <div class="container">
+        <div class="content">
+            <div class="title">Express Life 1.0</div>
+            <div >Hello ${ lname+' '+fname } ?</div>
+        </div>
+    </div>
+
+        <br/>
+    <!-- use for statement  -->
+    @for(var i = 0; i < 10; i++)
+        <p>row number ${ i+1 } </p><br/>
+    @endfor
+
+    <!-- use foreach statement  -->
+    @foreach(lname as char)
+        <p>the current char is ${ char } </p><br/>
+    @endfor
+
+    <!-- use asset for url -->
+    <a href = '@url()' >Home</a>
+
+    <!-- use asset for the static file in resources folders -->
+    <img src = '@asset(images/life.jpg)' />
+
+@endsection

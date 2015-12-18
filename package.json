@@ -1,0 +1,37 @@
+{
+  "name": "elife",
+  "version": "1.0.3",
+  "description": "Express life // jump start your web application with express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DIMLEO/express-life.git"
+  },
+  "keywords": [
+    "express",
+    "mvc",
+    "blade",
+    "ORM",
+    "MYSQL",
+    "SQLITE",
+    "POSTGREY",
+    "NodeJs"
+  ],
+  "author": "Diarra Mamadou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DIMLEO/express-life/issues"
+  },
+  "homepage": "https://github.com/DIMLEO/express-life#readme",
+  "dependencies": {
+        "express": "^4.13.3",
+        "type-of-is": "~3.4.0",
+        "elife-dim" : "^1.0.0",
+        "postgrey" : "latest",
+        "mysql" : "latest",
+        "sqlite" : "latest"
+    }
+}
