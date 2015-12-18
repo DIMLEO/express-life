@@ -2,14 +2,6 @@
 
 Fast, unopinionated, minimalist web framework for [node](http://nodejs.org).
 
-  [![NPM Version][npm-image]][npm-url]
-  [![NPM Downloads][downloads-image]][downloads-url]
-  [![Linux Build][travis-image]][travis-url]
-  [![Windows Build][appveyor-image]][appveyor-url]
-  [![Test Coverage][coveralls-image]][coveralls-url]
-
-
-
 ## Installation
 
 ```bash
@@ -53,14 +45,14 @@ module.exports = function(View, Env, Filre){
     ....
 ```
 
-## Configuration : index.js
+## index.js
 ```js
 var boot =  require('./app/bootstrap/boot');
 
 //database creation and table is ready
 $dbsm.ready(function(){
 
-    console.log('Document Ready');
+    console.log('Database is Ready');
 
 });
 ```
