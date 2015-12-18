@@ -25,5 +25,10 @@
   "bugs": {
     "url": "https://github.com/DIMLEO/express-life/issues"
   },
-  "homepage": "https://github.com/DIMLEO/express-life#readme"
+  "homepage": "https://github.com/DIMLEO/express-life#readme",
+  "dependencies": {
+        "express": "^4.13.3",
+        "type-of-is": "~3.4.0",
+        "dim" : "1.0.0"
+    }
 }
