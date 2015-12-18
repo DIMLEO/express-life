@@ -63,7 +63,7 @@ $dbsm.ready(function(){
     console.log('Document Ready');
 
 });
-```js
+```
 
 ## Features
 
