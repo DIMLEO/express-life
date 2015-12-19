@@ -3,7 +3,7 @@ module.exports = {
         return $Environement.host+'/'+path;
     },
     url : function(path){
-        if(empty(path)) throw new Error('Please enter the link to the @url function');
+        // if(empty(path)) throw new Error('Please enter the link to the @url function');
         return $Environement.host+'/'+path;
     },
     dateTime: function(format){

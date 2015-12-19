@@ -3,7 +3,7 @@ module.exports = function(View, Env, Filre){
 
     routes.get = {
         '/': function (req, res) {
-            res.send(View.make('index.html'));
+            res.view('index.html');
         }
     };
 
@@ -16,7 +16,7 @@ module.exports = function(View, Env, Filre){
     routes.all = {
         '/welcome': function (req, res) {
             res.send(
-                View.make('display/welcome.blade', {
+                res.view('display/welcome.blade', {
                         lname : "DJON",
                         fname : "Doe",
                         title : 'Express Life'
