@@ -1,0 +1,66 @@
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 100;
+    src: local('Lato Hairline'), local('Lato-Hairline'), url(../../css/fonts/font.woff2) format('woff2');
+}
+html, body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: table;
+    font-family: 'Lato';
+    font-weight: bold;
+    color : #e1e1e1;
+}
+.container {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+.content {
+    text-align: center;
+}
+.title {
+    font-size: 96px;
+    text-align : center;
+}
+.images-box span{
+    display : inline-block;
+    margin-left : 25px;
+    margin-right : 25px;
+}
+.images-box {
+    margin-top : 40px;
+    margin-bottom : 40px;
+    font-size : 50px;
+    font-weight : bold;
+    color : black;
+}
+.images-box img{
+    height : 40px;
+    vertical-align : middle;
+}
+.gow{
+    color: #B13038;
+}
+h3{
+    font-weight: normal;
+    color : #16A085;
+    font-weight: bold;
+}
+.e-button a{
+    display: inline-block;
+    text-decoration: none;
+    padding : 10px 15px;
+    border-radius: 3px;
+    background: #1ABC9C;
+    color : white;
+    font-family: arial;
+}
+.e-button a:hover{
+    background: #16A085;
+}
