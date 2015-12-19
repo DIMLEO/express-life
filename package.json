@@ -1,6 +1,6 @@
 {
   "name": "elife",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Express life // jump start your web application with express",
   "main": "index.js",
   "scripts": {
