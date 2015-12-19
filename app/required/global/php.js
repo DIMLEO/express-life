@@ -1,5 +1,7 @@
 Type = require('type-of-is');
 
+//https://github.com/kvz/phpjs/tree/master/functions
+
 
 pathinfo = function(path, options) {
     //  discuss at: http://phpjs.org/functions/pathinfo/

@@ -14,19 +14,17 @@ module.exports = function(View, Env, Filre){
     routes.put = {};
 
     routes.all = {
-        '/welcome': function (req, res) {
-            res.send(
-                res.view('display/welcome.blade', {
-                        lname : "DJON",
-                        fname : "Doe",
-                        title : 'Express Life'
-                    })
-            );
-        }
+        'github' : function(req, res){
+            res.redirect('https://github.com/');
+        },
+		'welcome' : function(req, res){
+			res.view('display/welcome.blade');
+		}
     };
 
-	// For the next version
-    // routes.controller = {};
+    routes.controller = {
+        '/help' : 'HelpController'
+    };
 
 
     return routes;

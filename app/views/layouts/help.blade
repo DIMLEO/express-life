@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <link rel = "stylesheet" href="@url(css/help.css)" />
+    <meta charset="UTF-8" />
+    <title>${ title }</title>
+</head>
+<body>
+<header  >
+    <div class="body" >
+        <!-- use asset for the static file in resources folders -->
+        <img src = '@asset(images/elife.png)' style="height : 80px;" />
+        <span class="title">
+            <span style="color : #92D13D;" >Express</span>
+            <span style="color : #DE3541;" >Life</span>
+        </span>
+    </div>
+</header>
+
+    <div class="body" >
+        <div class="describe" >
+            @yield(body)
+        </div>
+        <div class="options" >
+
+        </div>
+    </div>
+
+<footer>
+    <div class="body" >
+        <!-- use asset for the static file in resources folders -->
+    </div>
+</footer>
+<script type="text/javascript" src = "script/angular.min.js" ></script>
+@yield(script)
+</body>
+</html>

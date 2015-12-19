@@ -6,6 +6,8 @@ var app = express();
 /*
  * for global use in the project
  */
+BaseController = undefined;
+
 $Express = express;
 
 $App = app;
@@ -70,11 +72,11 @@ try {
 
     $View = dim[env.template];
 
-    $Filters = require(env.path.app + '/filters.js');
+    $Filters = require(env.path.app + '/filters');
 
-    $Routes = require(env.path.app + '/routes.js')();
+    $Routes = require(env.path.app + '/routes')();
 
-    $Lang = require(env.path.app + '/lang/lang.js');
+    $Lang = require(env.path.app + '/lang/lang');
 
     $Validation = require('mod-validator');
 
@@ -128,19 +130,39 @@ try {
         $_REQUEST = req;
     });
 
-    var type = ['get', 'post', 'delete', 'put', 'all'];
+    var type = ['get', 'post', 'delete', 'put', 'all', 'controller'];
+
 
     for (var index in type) {
         var method = type[index];
         if ($Routes[method]) {
             var data = $Routes[method];
+            if(method != 'controller'){
+                for (var path in data)
+                    app[method](path, data[path]);
+            }
+            else{
+                for(var preffix in data){
+                    var pathx = undefined, methods = require(env.path.app + '/controllers/'+data[preffix]);
 
-            for (var path in data) {
-                app[method](path, data[path]);
+                    for(var path in methods){
+                        if(/^get/.test(path)) method = 'get';
+                        else if(/^post/.test(path)) method = 'post';
+                        else if(/^delete/.test(path)) method = 'delete';
+                        else if(/^put/.test(path)) method = 'put';
+                        else if(/^all/.test(path)) method = 'all';
+
+                        var reg = new RegExp('^'+method, 'i');
+                        pathx = preffix+'/'+path.replace(reg, '');
+
+                        if(type.indexOf(method) != -1 && method != 'controller') app[method](pathx, methods[path]);
+                    }
+                }
             }
         }
     }
 
+    //
     if($Environement.faveicon){
         var favicon = require('serve-favicon');
         app.use(favicon($Environement.faveicon));
