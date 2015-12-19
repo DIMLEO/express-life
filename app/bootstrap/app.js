@@ -22,6 +22,17 @@ module.exports= {
         version: "1.0.0"
         },
 
+    //MULTILANGUAGE MANGER
+    lang : {
+        //if fromSession not empty it will be used to load the language package
+        //if fromSession d'ont exist default will be used
+        //if any pack exist you will be have a beauty error
+        //if this.from is
+        default: "en",
+        fromSession : "",
+        fromOther : ""//must be a function if required
+    },
+
     //DATABASE CONNECTION PARAMS
     database: {
             default : "",
@@ -52,15 +63,6 @@ module.exports= {
                     password:"root",
                     name: "express_life",
                     port: "6969",//5432
-                    suffix : ""
-                },
-                mongodb : {
-                    createIfNotExist : true,
-                    host : "localhost",
-                    user: "root",
-                    password:"",
-                    name: "",
-                    port: "",
                     suffix : ""
                 }
             }

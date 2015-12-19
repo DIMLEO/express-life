@@ -16,6 +16,10 @@ $Dim = undefined;
 
 $View = {};
 
+$Validation = {};
+
+$Lang = {};
+
 $Filters = {};
 
 $Routes = {};
@@ -70,12 +74,32 @@ try {
 
     $Routes = require(env.path.app + '/routes.js')();
 
+    $Lang = require(env.path.app + '/lang/lang.js');
+
+    $Validation = require('mod-validator');
+
+    //REWRITE THE MAKE FUNCTION
+    $Validation.mk = $Validation.make;
+    $Validation.mkLastLg = undefined;
+    $Validation.make = function(rules, data){
+        var v = $Validation.mk(rules, data);
+        if($Validation.mkLastLg != $Lang.lang()) {
+            $Validation.mkLastLg = $Lang.lang();
+            v.mergeMessage($Lang.get('validator'));
+        }
+        return v;
+    };
+
     //
     app.use(function(req, res, next){
         $_REQUEST = {};
         $_FILES = {};
         $_POST = {};
         $_GET = {};
+
+        res.view = function(view, vars){
+            res.send($View.make(view, vars));
+        };
 
         if(req.method === 'GET'){
             $_GET = (req.query)?req.query:{};
@@ -121,7 +145,6 @@ try {
         var favicon = require('serve-favicon');
         app.use(favicon($Environement.faveicon));
     }
-
 
 
 }
