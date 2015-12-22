@@ -40,7 +40,8 @@ module.exports= {
             default : "",
             /*
              *
-             * default : "mysql",
+             * default : "mysql", "sqlite"
+			 * psql is not support for the moment
              *
              */
             connections : {
@@ -54,10 +55,13 @@ module.exports= {
                     suffix : ""
                 },
                 sqlite : {
-                    memory : true, /* boolean */
+                    memory : false, /* boolean */
                     name :  'express_life', /* when memory is false name is required and is the database name*/
                     folder : __dirname + '/../../app/storage/database'
                 },
+                /*
+                 * psql équivalent is not ready so you can't use ate to  for the moment
+                 */
                 psql : {
                     createIfNotExist : true,
                     host : "127.0.0.1",

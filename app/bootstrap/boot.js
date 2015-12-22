@@ -264,7 +264,7 @@ var server = app.listen(env.port, function () {
 
     process.on('uncaughtException', function(err) {
 
-        //console.error(err.stack);
+        console.error(err.stack);
 
     });
 
