@@ -15,49 +15,100 @@ Fast, unopinionated, minimalist web framework for [node](http://nodejs.org).
 
 ## Configuration : app/bootstrap/app.js
 ```js
-    mode : "dev", /**** values : dev, prod ****/
+    mode : "dev", 
+    /**
+     * values : dev, prod
+     * dev for devellepement 
+     * pro for production mode 
+     **/
 
     port: 8080,
 
-    /*
+    /**
      * do not forget to change the port in the Host
-     */
+     **/
     host : 'http://localhost:8080',
     ....
 ```
 
 ## Routing : app/routes.js
+
 ```js
 module.exports = function(View, Env, Filre){
     var routes = {};
 
     routes.get = {
-        '/': function (req, res) {
-            res.send(View.make('index.html'));
+        '/': function () {
+            //The function returns a value if and only if it does not receive parameters
+            return 'Hello Word';
+        },
+        'bar' : function(req, res){
+            res.send('Hello Word');
+        },
+        
+        //Exemple with filter
+        '/foo' : {
+            before : 'auth',
+            uses : function(req, res){
+                               
+                     }
         }
     };
 
+    //Exmeple with all
     routes.all = {
-        '/test': function (req, res) {
+        '/index': function (req, res) {
+            //you must create the file index.blade
             res.send(
-                View.make('test.blade', {
-                        lname : "DIARRA",
-                        fname : "Mamdou"
+                View.make('index.blade', {
+                        lname : "ELIFE",
+                        fname : "DIM"
                     })
             );
         }
     };
-    ....
+    
+    //Exemple with controller
+     routes.controller = {
+        '/user' : 'UserController',
+        //Exmple with controller and filter
+        '/post' : {
+            before : 'auth',
+            uses : 'UserController'
+         }
+     } 
+    .....
+    
 ```
+
+## Filter : app/filters.js
+```js
+    csrf : function(){
+        if($Session.get('csrf') != $Input.get($Environement.token)){
+            throw new Error('');
+        }
+    },
+    auth : function(){
+        if(!$Auth.check()) {
+
+            throw new Error('Required Authentification');
+            //or
+            //res.redirect(url('/'));
+        }
+    }
+    .....
+```js
+
 
 ## index.js
 ```js
 var boot =  require('./app/bootstrap/boot');
 
-//database creation and table is ready
-$dbsm.ready(function(){
+boot.start(function(){
 
-    console.log('Database is Ready');
+    //Application is ready
+    //voulez vous executer un code ecrivez le ici
+     console.log('Application is ready');
 
 });
 ```
@@ -65,13 +116,15 @@ $dbsm.ready(function(){
 ## Features
 
   * Express Robust routing
-  * Laravel Blade template
+  * filters
+  * Controllers
+  * EBlade inspired Blade Laravel
   * Blade esay extends
-  * Laravel eloquent ORM
+  * Laravel eloquent ORM For MYSQL and SQLITE
   * create database if not exists
-  * create table of model required
-  * auto-update table when model change
-  * lang manager
+  * Create tables that are required for the models, associative tables also create tables
+  * Aside automatic update tables when the exchange models
+  * language management for internationalization
 
 
 
