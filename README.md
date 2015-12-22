@@ -3,7 +3,7 @@
 Fast, unopinionated, minimalist web framework for [node](http://nodejs.org).
 
 ## Commit && Push
-	this is a draft project is a embryonic stage
+	this is a test project, is a embryonic stage
 	all changes or proposals are welcome
 
 # Getting Started
