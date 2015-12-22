@@ -115,20 +115,20 @@ boot.start(function(){
 
 ## Equivalence
 
-| ELife         |     PHP         |   Laravel  |   Express  |
-| ------------- |: -------------: | :---------:| ----------:|
-| $_POST        |        $_POST   |      -     |            |
-| $_GET         |        $_GET    |      -     |            |
-| $App          |        -        |      -     | express.app|
-| $Express      |        -        |      -     | express    |
-| $View         |        -        | View       |            |     
-| $_FILES       |        $_FILES  |      -     |            |
-| $_REQUEST     |        $_REQUEST|      -     |            |
-| $Session      |        -        | Session    |            |
-| $Hash         |        -        | Hash       |            |
-| $Auth         |        -        | Auth       |            |
-| $Input        |        -        | Input      |            |
-| $Validation   |        -        | Validation |            |
+    | ELife         |     PHP         |   Laravel  |   Express  |
+    | ------------- |: -------------: | :---------:| ----------:|
+    | $_POST        |        $_POST   |      -     |            |
+    | $_GET         |        $_GET    |      -     |            |
+    | $App          |        -        |      -     | express.app|
+    | $Express      |        -        |      -     | express    |
+    | $View         |        -        | View       |            |     
+    | $_FILES       |        $_FILES  |      -     |            |
+    | $_REQUEST     |        $_REQUEST|      -     |            |
+    | $Session      |        -        | Session    |            |
+    | $Hash         |        -        | Hash       |            |
+    | $Auth         |        -        | Auth       |            |
+    | $Input        |        -        | Input      |            |
+    | $Validation   |        -        | Validation |            |
 
 
 ## php functions
@@ -174,30 +174,30 @@ boot.start(function(){
   
 ## EBlade standard
 
- | Laravel Blade              |     ELIFE Blade             |
- | ---------------------------|: ---------------------------:
- | {{ var }}                  | ${ var }                    |
- | -                          | ${ var_dump(var) }          |
- | @extends('layouts.master') | @extends(layouts.master)    |
- | @section('sidebar')        | @section(sidebar)           |
- | @endsection                | @endsection                 |
- | @yield('content')          | @yield(content)             |
- | @yield('content')          | @yield(content)             |
- | @if                        | @if                         |
- | @elseif                    | @elseif                     |
- | @else                      | @else                       |
- | @endif                     | @endif                      |
- | @for                       | @for                        |
- | @endfor                    | @endfor                     |
- | @foreach                   | @foreach                    |
- | @endforeach                | @endforeach                 |
- | @while                     | @while                      |
- | @include("...")            | @include(....)              |
- | -                          | @bower(package)             |
- | @asset("...")              | @asset(...)                 |
- | @url("...")                | @url(...)                   |
- | -                          | @dateTime                   |
- 
+     | Laravel Blade              |     ELIFE Blade             |
+     | ---------------------------| ----------------------------:
+     | {{ var }}                  | ${ var }                    |
+     | -                          | ${ var_dump(var) }          |
+     | @extends('layouts.master') | @extends(layouts.master)    |
+     | @section('sidebar')        | @section(sidebar)           |
+     | @endsection                | @endsection                 |
+     | @yield('content')          | @yield(content)             |
+     | @yield('content')          | @yield(content)             |
+     | @if                        | @if                         |
+     | @elseif                    | @elseif                     |
+     | @else                      | @else                       |
+     | @endif                     | @endif                      |
+     | @for                       | @for                        |
+     | @endfor                    | @endfor                     |
+     | @foreach                   | @foreach                    |
+     | @endforeach                | @endforeach                 |
+     | @while                     | @while                      |
+     | @include("...")            | @include(....)              |
+     | -                          | @bower(package)             |
+     | @asset("...")              | @asset(...)                 |
+     | @url("...")                | @url(...)                   |
+     | -                          | @dateTime                   |
+     
   
 ## Features
 
