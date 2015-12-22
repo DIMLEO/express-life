@@ -113,6 +113,92 @@ boot.start(function(){
 });
 ```
 
+## Equivalence
+
+| ELife         |     PHP         |   Laravel  |   Express  |
+| ------------- |: -------------: | :---------:| ----------:|
+| $_POST        |        $_POST   |      -     |            |
+| $_GET         |        $_GET    |      -     |            |
+| $App          |        -        |      -     | express.app|
+| $Express      |        -        |      -     | express    |
+| $View         |        -        | View       |            |     
+| $_FILES       |        $_FILES  |      -     |            |
+| $_REQUEST     |        $_REQUEST|      -     |            |
+| $Session      |        -        | Session    |            |
+| $Hash         |        -        | Hash       |            |
+| $Auth         |        -        | Auth       |            |
+| $Input        |        -        | Input      |            |
+| $Validation   |        -        | Validation |            |
+
+
+## php functions
+
+  * pathinfo
+  * var_dump
+  * count
+  * dateFormat
+  * empty
+  * is_bool
+  * is_number
+  * is_object
+  * is_null
+  * is_undefined
+  * is_regexp
+  * is_array
+  * is_function
+  * is_date
+  * array_map
+  * array_merge
+  * array_keys
+  * array_sum
+  * in_array
+  * range
+  * time
+  * strtotime
+  * microtime
+  * date
+  * function_exists
+  * rand
+  * md5
+  * sha1
+  * utf8_decode
+  * utf8_encode
+  * mktime
+  * basename
+  
+## php elife functions
+
+  * array_int
+  * object_merge -> array_merge
+  * is_error
+  
+## EBlade standard
+
+ | Laravel Blade              |     ELIFE Blade             |
+ | ---------------------------|: ---------------------------:
+ | {{ var }}                  | ${ var }                    |
+ | -                          | ${ var_dump(var) }          |
+ | @extends('layouts.master') | @extends(layouts.master)    |
+ | @section('sidebar')        | @section(sidebar)           |
+ | @endsection                | @endsection                 |
+ | @yield('content')          | @yield(content)             |
+ | @yield('content')          | @yield(content)             |
+ | @if                        | @if                         |
+ | @elseif                    | @elseif                     |
+ | @else                      | @else                       |
+ | @endif                     | @endif                      |
+ | @for                       | @for                        |
+ | @endfor                    | @endfor                     |
+ | @foreach                   | @foreach                    |
+ | @endforeach                | @endforeach                 |
+ | @while                     | @while                      |
+ | @include("...")            | @include(....)              |
+ | -                          | @bower(package)             |
+ | @asset("...")              | @asset(...)                 |
+ | @url("...")                | @url(...)                   |
+ | -                          | @dateTime                   |
+ 
+  
 ## Features
 
   * Express Robust routing
