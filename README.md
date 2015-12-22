@@ -1,6 +1,6 @@
 # elife extends express
 
-Fast, unopinionated, minimalist web framework for [node](http://nodejs.org).
+NodeJs Web Framework  [node](http://nodejs.org).
 
 ## Commit && Push
 	this is a test project, is a embryonic stage
