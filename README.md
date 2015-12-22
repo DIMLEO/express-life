@@ -2,6 +2,9 @@
 
 Fast, unopinionated, minimalist web framework for [node](http://nodejs.org).
 
+## Commit && Push
+	this is a draft project is a embryonic stage
+	all changes or proposals are welcome
 
 # Getting Started
 
@@ -241,10 +244,6 @@ boot.start(function(){
   * Aside automatic update tables when the exchange models
   * language management for internationalization
 
-  
-  
-## Commit && Push
-	all changes or proposals are welcome
 
 
 ## License
