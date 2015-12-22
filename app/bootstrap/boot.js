@@ -181,8 +181,8 @@ try {
 
     var cur = undefined;
     for (var index in type) {
-        if(type.indexOf(method) == -1) continue;
         var method = type[index];
+        if(type.indexOf(method) == -1) continue;
         if ($Routes[method]) {
             var data = $Routes[method];
             if(method != 'controller'){
