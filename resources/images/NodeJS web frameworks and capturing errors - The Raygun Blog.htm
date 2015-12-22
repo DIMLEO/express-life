@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="no-js ie ie7 lt-ie9 lt-ie8" lang="en-US" prefix="og: http://ogp.me/ns#">
+<![endif]-->
+<!--[if IE 8]>
+<html class="no-js ie ie8 lt-ie9" lang="en-US" prefix="og: http://ogp.me/ns#">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8) ]><!-->
+<html style="" class=" js flexbox no-touch history draganddrop rgba multiplebgs backgroundsize boxshadow opacity cssanimations cssgradients csstransforms csstransforms3d csstransitions fontface generatedcontent localstorage svg cssremunit placeholder" prefix="og: http://ogp.me/ns#" lang="en-US"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta class="foundation-mq-small"><meta class="foundation-mq-small-only"><meta class="foundation-mq-medium"><meta class="foundation-mq-medium-only"><meta class="foundation-mq-large"><meta class="foundation-mq-large-only"><meta class="foundation-mq-xlarge"><meta class="foundation-mq-xlarge-only"><meta class="foundation-mq-xxlarge"><meta class="foundation-data-attribute-namespace">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="twitter:widgets:csp" content="on">
+
+	<title>NodeJS web frameworks and capturing errors - The Raygun Blog</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://raygun.io/blog/xmlrpc.php">
+
+			<link rel="shortcut icon" href="https://raygun.io/blog/wp-content/themes/rayguntheme-build-20151217/images/favicon.ico" type="image/x-icon">
+	
+	
+<!-- This site is optimized with the Yoast SEO plugin v3.0.6 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Let’s have a look at how the raygun4node module integrates with a few of the common NodeJS web frameworks">
+<meta name="robots" content="noodp">
+<link rel="canonical" href="https://raygun.io/blog/2015/04/nodejs-web-frameworks-and-capturing-errors/">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NodeJS web frameworks and capturing errors - The Raygun Blog">
+<meta property="og:description" content="Let’s have a look at how the raygun4node module integrates with a few of the common NodeJS web frameworks">
+<meta property="og:url" content="https://raygun.io/blog/2015/04/nodejs-web-frameworks-and-capturing-errors/">
+<meta property="og:site_name" content="The Raygun Blog">
+<meta property="article:section" content="Provider Related">
+<meta property="article:published_time" content="2015-04-21T05:07:02+00:00">
+<meta property="article:modified_time" content="2015-11-26T10:39:46+00:00">
+<meta property="og:updated_time" content="2015-11-26T10:39:46+00:00">
+<meta property="og:image" content="https://raygun.io/blog/wp-content/uploads/2015/03/raygunmodel.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Let’s have a look at how the raygun4node module integrates with a few of the common NodeJS web frameworks">
+<meta name="twitter:title" content="NodeJS web frameworks and capturing errors - The Raygun Blog">
+<meta name="twitter:site" content="@raygunio">
+<meta name="twitter:image" content="https://raygun.io/blog/wp-content/uploads/2015/03/raygunmodel.png">
+<meta name="twitter:creator" content="@dwnz">
+<!-- / Yoast SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="The Raygun Blog » Feed" href="https://raygun.io/blog/feed/">
+<link rel="alternate" type="application/rss+xml" title="The Raygun Blog » Comments Feed" href="https://raygun.io/blog/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="The Raygun Blog » NodeJS web frameworks and capturing errors Comments Feed" href="https://raygun.io/blog/2015/04/nodejs-web-frameworks-and-capturing-errors/feed/">
+		<script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/51412f379bcb66000200028a.js" async="" type="text/javascript"></script><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/analytics.js" async=""></script><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/raygun.js" async=""></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"https:\/\/raygun.io\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script type="text/javascript" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/wp-emoji-release.js"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="crayon-css" href="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/crayon.css" type="text/css" media="all">
+<link rel="stylesheet" id="crayon-theme-raygun-css" href="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/raygun.css" type="text/css" media="all">
+<link rel="stylesheet" id="crayon-font-monaco-css" href="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/monaco.css" type="text/css" media="all">
+<link rel="stylesheet" id="bcct_style-css" href="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/styles.css" type="text/css" media="all">
+<link rel="stylesheet" id="wp-syntax-css-css" href="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/wp-syntax.css" type="text/css" media="all">
+<link rel="stylesheet" id="custom-font-css" href="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/css.css" type="text/css" media="all">
+<link rel="stylesheet" id="raygun-main-css" href="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/rayguntheme.css" type="text/css" media="all">
+<link rel="stylesheet" id="raygun-style-css" href="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="raygun-crayon-theme-css" href="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/raygun_002.css" type="text/css" media="all">
+<link rel="stylesheet" id="jetpack_css-css" href="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/jetpack.css" type="text/css" media="all">
+<script type="text/javascript" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/jquery.js"></script>
+<script type="text/javascript" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/jquery-migrate.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"https:\/\/raygun.io\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/crayon.js"></script>
+<script type="text/javascript" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/modernizr.js"></script>
+<link rel="https://api.w.org/" href="https://raygun.io/blog/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://raygun.io/blog/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://raygun.io/blog/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 4.4">
+<link rel="shortlink" href="https://wp.me/p3j1bq-180">
+<link rel="alternate" type="application/json+oembed" href="https://raygun.io/blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fraygun.io%2Fblog%2F2015%2F04%2Fnodejs-web-frameworks-and-capturing-errors%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://raygun.io/blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fraygun.io%2Fblog%2F2015%2F04%2Fnodejs-web-frameworks-and-capturing-errors%2F&amp;format=xml">
+
+		<script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/oct.js" type="text/javascript"></script>
+
+	<script type="text/javascript">if (!Modernizr.placeholder) { document.write('<script src="https://raygun.io/blog/wp-content/themes/rayguntheme-build-20151217/js/vendor/jquery.placeholder.min.js"><\/script>'); }</script>
+
+	<!--[if lt IE 9]>
+	<script src="https://raygun.io/blog/wp-content/themes/rayguntheme-build-20151217/dist/js/rayguntheme-polyfill.min.js"></script>
+	<![endif]-->
+
+	<script type="text/javascript">var _sf_startpt = (new Date()).getTime()</script>
+
+	
+		<script type="text/javascript">
+			!function(a,b,c,d,e,f,g,h){a.RaygunObject=e,a[e]=a[e]||function(){
+					(a[e].o=a[e].o||[]).push(arguments)},f=b.createElement(c),g=b.getElementsByTagName(c)[0],
+				f.async=1,f.src=d,g.parentNode.insertBefore(f,g),h=a.onerror,a.onerror=function(b,c,d,f,g){
+				h&&h(b,c,d,f,g),g||(g=new Error(b)),a[e].q=a[e].q||[],a[e].q.push({
+					e:g})}}(window,document,"script","//cdn.raygun.io/raygun4js/raygun.min.js","rg4js");
+		</script>
+
+					<script>
+				(function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r;i[r] = i[r] || function () {(i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o),m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');ga('create', 'UA-34597244-1', 'auto');ga('send', 'pageview');
+			</script>
+		
+	
+<style></style><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/js" async="" type="text/javascript"></script><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/in_011.php" async="" type="text/javascript"></script><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/tagjs" async="" type="text/javascript"></script><img src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/a_004.gif" border="0" height="1" width="1"><img src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/a_003.gif" border="0" height="1" width="1"><img src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/a_002.gif" border="0" height="1" width="1"><img src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/a.gif" border="0" height="1" width="1"><img src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/seg.gif" border="0" height="1" width="1"><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/in.php" async="" type="text/javascript"></script><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/in_006.php" async="" type="text/javascript"></script><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/in_004.php" async="" type="text/javascript"></script><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/in_003.php" async="" type="text/javascript"></script><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/in_008.php" async="" type="text/javascript"></script><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/in_002.php" async="" type="text/javascript"></script><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/in_009.php" async="" type="text/javascript"></script><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/in_010.php" async="" type="text/javascript"></script><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/in_005.php" async="" type="text/javascript"></script><script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/in_007.php" async="" type="text/javascript"></script></head>
+
+<body class="single single-post postid-4340 single-format-standard group-blog masthead-fixed full-width singular">
+<div id="page" class="hfeed site">
+
+	<header class="header">
+		<div class="row">
+			<div class="column">
+				<nav id="top" class="navbar-desktop clearfix">
+					<a href="https://raygun.io/" class="logo-raygun logo logo-type"></a>
+
+					<ul id="menu" class="menu-list nav-primary noselect">
+						<li class="menu-item"><a href="https://raygun.io/products/crash-reporting" class="menu-link">Crash Reporting</a></li>
+						<li class="menu-item"><a href="https://raygun.io/products/real-user-monitoring" class="menu-link">Pulse</a></li>
+						<li class="menu-item"><a href="https://raygun.io/enterprise" class="menu-link">Enterprise</a></li>
+					</ul>
+
+					<a href="https://app.raygun.io/signup/?utm_source=blog&amp;utm_medium=blog-top-cta&amp;utm_campaign=blog-cta-button" class="green button trial-button" target="_blank">Free Trial</a>
+
+					<ul class="menu-list nav-auxiliary noselect">
+						<li class="menu-item menu-item-secondary"><a href="https://raygun.io/docs" class="menu-link">Docs</a></li>
+						<li class="menu-item menu-item-secondary"><a href="https://raygun.io/blog" class="menu-link">Blog</a></li>
+						<li class="menu-item menu-item-secondary"><a href="https://raygun.io/search" class="menu-link">Search</a></li>
+						<li class="menu-item menu-item-secondary"><a href="https://app.raygun.io/" class="menu-link">Sign In</a></li>
+					</ul>
+				</nav>
+
+				<input aria-hidden="true" id="listener-mobile-navigation" onclick="toggleScroll()" type="checkbox">
+				<label for="listener-mobile-navigation" class="mobile-navigation-toggle open">
+					<span class="screen-reader-text">Menu</span>
+				</label>
+
+				<div aria-hidden="true" class="mobile-navigation-draw index-1">
+
+					<div class="mobile-menu-inner-container">
+						<label for="listener-mobile-navigation" class="mobile-navigation-toggle close">
+							<span class="screen-reader-text">Close</span>
+						</label>
+
+						<div class="mobile-navigation-header"><a href="https://raygun.io/blog/" class="logo-raygun logo logo-type"></a></div>
+						<div class="mobile-navigation-scroll">
+							<!-- primary (mobile) menu-->
+							<div class="zd-nav-menu zd-nav-menu-raygun_mobile"><ul id="menu-mobile-navigation" class="nav-menu"><li id="menu-item-5870" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5870"><a href="https://raygun.io/">Home</a></li><li id="menu-item-5874" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5874"><a href="https://app.raygun.io/signin">Sign In</a></li><li id="menu-item-5875" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5875"><a href="https://app.raygun.io/signup">Free Trial</a></li><li id="menu-item-5871" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5871"><a href="https://raygun.io/products/crash-reporting">Crash Reporting</a></li><li id="menu-item-5872" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5872"><a href="https://raygun.io/products/real-user-monitoring">Pulse</a></li><li id="menu-item-5873" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5873"><a href="https://raygun.io/enterprise">Enterprise</a></li><li id="menu-item-3184" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3184"><a href="https://raygun.io/blog/">Recent Posts</a></li><li id="menu-item-3038" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3038"><a href="https://raygun.io/blog/resources/">Developer Resources</a></li><li id="menu-item-3067" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3067"><a href="https://raygun.io/blog/case-studies/">Case Studies</a></li><li id="menu-item-3022" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3022"><a href="https://raygun.io/blog/community/">Community</a></li></ul></div>						</div>
+
+					</div>
+					<!-- .mobile-menu-inner-container -->
+				</div>
+				<!-- mobile-navigation-draw -->
+
+				<input aria-hidden="true" id="listener-mobile-search" onclick="toggleScroll()" type="checkbox">
+				<label for="listener-mobile-search" class="mobile-search-toggle">
+					<span class="screen-reader-text">Search</span>
+				</label>
+
+				<div aria-hidden="true" class="mobile-search-draw index-1">
+
+					<div class="mobile-menu-inner-container">
+
+						<form id="mobile-search-form" method="get" action="https://raygun.io/blog/">
+							<label for="listener-mobile-search" class="mobile-search-close">
+								<span class="screen-reader-text">Close</span>
+							</label>
+							<input name="s" class="mobile-search-input" placeholder="Search our blog" type="text">
+
+							<h3>Filter by category</h3>
+
+							<ul>
+																<li>
+									<input class="mobile-search-category" id="mobile-search-check-all" name="category_name" value="" checked="checked" type="radio">
+									<label for="mobile-search-check-all">
+										<span class="mobile-search-tick ticked"></span>
+										<span class="mobile-search-label-text">All Categories</span>
+									</label>
+								</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-146" name="category_name" value="announcements" type="radio">
+										<label for="mobile-search-check-146">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">Announcements</span>
+										</label>
+									</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-81" name="category_name" value="case-studies" type="radio">
+										<label for="mobile-search-check-81">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">Case Studies</span>
+										</label>
+									</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-92" name="category_name" value="community" type="radio">
+										<label for="mobile-search-check-92">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">Community</span>
+										</label>
+									</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-2" name="category_name" value="feature-additions" type="radio">
+										<label for="mobile-search-check-2">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">Feature Additions</span>
+										</label>
+									</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-35" name="category_name" value="general" type="radio">
+										<label for="mobile-search-check-35">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">General</span>
+										</label>
+									</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-28" name="category_name" value="plugins" type="radio">
+										<label for="mobile-search-check-28">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">Plugins</span>
+										</label>
+									</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-1" name="category_name" value="provider-related" type="radio">
+										<label for="mobile-search-check-1">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">Provider Related</span>
+										</label>
+									</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-163" name="category_name" value="pulse" type="radio">
+										<label for="mobile-search-check-163">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">Pulse</span>
+										</label>
+									</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-74" name="category_name" value="labs" type="radio">
+										<label for="mobile-search-check-74">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">Raygun Labs</span>
+										</label>
+									</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-85" name="category_name" value="resource" type="radio">
+										<label for="mobile-search-check-85">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">Resource</span>
+										</label>
+									</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-79" name="category_name" value="tech-stuff" type="radio">
+										<label for="mobile-search-check-79">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">Tech Stuff</span>
+										</label>
+									</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-27" name="category_name" value="updates" type="radio">
+										<label for="mobile-search-check-27">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">Updates</span>
+										</label>
+									</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-6" name="category_name" value="development" type="radio">
+										<label for="mobile-search-check-6">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">Web Development</span>
+										</label>
+									</li>
+
+																	<li>
+										<input class="mobile-search-category" id="mobile-search-check-86" name="category_name" value="white-papers" type="radio">
+										<label for="mobile-search-check-86">
+											<span class="mobile-search-tick"></span>
+											<span class="mobile-search-label-text">White Papers</span>
+										</label>
+									</li>
+
+															</ul>
+
+							<button id="mobile-search-submit" type="submit">Search</button>
+						</form>
+
+					</div>
+					<!-- .mobile-menu-inner-container -->
+
+				</div>
+				<!-- mobile-search-draw -->
+
+				<!--.header-content-->
+			</div>
+		</div>
+
+
+	</header>
+	<!-- main header ends -->
+	<!-- Sub header that contains all the navigation for the blog except for search -->
+	<nav class="header-sub">
+
+		<div class="header-content row">
+			<div class="column">
+
+				<div class="zd-nav-menu zd-nav-menu-secondary"><ul id="menu-blog-navigation" class="nav-menu"><li id="menu-item-3182" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3182"><a href="https://raygun.io/blog/">Recent Updates</a></li><li id="menu-item-3037" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3037"><a href="https://raygun.io/blog/resources/">Developer Resources</a></li><li id="menu-item-3928" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3928"><a href="https://raygun.io/blog/case-studies/">Case Studies</a></li><li id="menu-item-3174" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3174"><a href="https://raygun.io/blog/community/">Community</a></li><li id="menu-item-5994" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5994"><a href="https://raygun.io/blog/our-authors/">Authors</a></li></ul></div>
+<form method="get" class="search-form" action="https://raygun.io/blog/">
+	<label>
+		<span class="screen-reader-text">Search for:</span>
+		<input class="search-field input-search" placeholder="Search …" name="s" title="Search for:" required="" type="search">
+	</label>
+	<button type="submit" class="button-search search-submit"><span class="screen-reader-text">Search</span></button>
+</form>			</div>
+
+		</div>
+
+	</nav>
+	<!-- sub header ends -->
+
+	<div id="main-wrapper" class="site-main">
+<div id="main" class="row">
+	<div id="primary" class="content-primary ajax-content-area medium-8 large-8 columns" role="main">
+
+		
+<article id="post-4340" class="post-4340 post type-post status-publish format-standard has-post-thumbnail hentry category-provider-related category-resource">
+
+	<header class="entry-header">
+        <h2 class="entry-title">NodeJS web frameworks and capturing errors</h2>
+		<div class="entry-meta">
+                            <span class="cat-links"><span class="fa fa-flag-o">Provider Related</span><span class="fa fa-archive">Resource</span></span>
+             <span class="byline"><span class="author vcard"><a class="url fn n" href="https://raygun.io/blog/author/daniel/" rel="author">Daniel Wylie</a></span></span> <span class="entry-date"><a href="https://raygun.io/blog/2015/04/nodejs-web-frameworks-and-capturing-errors/" rel="bookmark"><time class="entry-date" datetime="2015-04-21T05:07:02+00:00">April 21, 2015</time></a></span>
+			<span class="comments-link"><a href="https://raygun.io/blog/2015/04/nodejs-web-frameworks-and-capturing-errors/#respond">Leave a comment</a></span>
+					</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+	        
+	<div class="entry-content">
+        <p>So you’re just about to start your sweet new <a href="https://nodejs.org/" target="_blank">NodeJS</a>
+ project? Awesome! Let’s be friends. Since you’re just starting out, you
+ probably haven’t thought about exceptions yet, have you? No worries – I
+ won’t tell anyone. Let’s have a look at how the&nbsp;<a href="https://github.com/MindscapeHQ/raygun4node" target="_blank">raygun4node</a> module integrates with a few of the NodeJS web frameworks you’ll most likely be looking at.</p>
+<h2>ExpressJS</h2>
+<p>The almost-defacto framework for building web applications in NodeJS, <a href="http://expressjs.com/" target="_blank">ExpressJS</a> makes it easy to integrate with the Raygun, you simply use:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-56764526dcc2a433729571" class="crayon-syntax crayon-theme-raygun crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 12px; margin-bottom: 12px; font-size: 12px ! important; line-height: 15px ! important; height: auto;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px ! important; height: 18px ! important; line-height: 18px ! important; margin-top: -18px; display: none; z-index: 4;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button crayon-pressed" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px ! important; line-height: 16.8px ! important; margin-top: -17px; display: none;"></div>
+			<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" data-settings="dblclick" readonly="readonly" style="-moz-tab-size: 4; font-size: 12px ! important; line-height: 15px ! important; z-index: 0; opacity: 0; overflow: hidden;" wrap="soft">app.use(raygunClient.expressHandler);</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				<table style="" class="crayon-table">
+					<tbody><tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-56764526dcc2a433729571-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-56764526dcc2a433729571-1"><span class="crayon-v">app</span><span class="crayon-sy">.</span><span class="crayon-st">use</span><span class="crayon-sy">(</span><span class="crayon-v">raygunClient</span><span class="crayon-sy">.</span><span class="crayon-v">expressHandler</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0003 seconds] -->
+<p>Place it at the bottom of your middleware definitions and you’re away laughing.</p>
+<h2>Hapi</h2>
+<p><a href="http://hapijs.com/" target="_blank">Hapi</a> is a 
+lightweight library that focuses on reusable code and less on writing 
+configuration code. Again, it’s super simple to integrate Raygun into 
+Hapi’s workflow:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-56764526dcc34178244935" class="crayon-syntax crayon-theme-raygun crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 12px; margin-bottom: 12px; font-size: 12px ! important; line-height: 15px ! important; height: auto;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px ! important; height: 18px ! important; line-height: 18px ! important; margin-top: -18px; display: none; position: absolute; z-index: 2;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button crayon-pressed" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" data-settings="dblclick" readonly="readonly" style="-moz-tab-size: 4; font-size: 12px ! important; line-height: 15px ! important; z-index: 0; opacity: 0; overflow: hidden;" wrap="soft">var raygun = require('raygun');
+var raygunClient = new raygun.Client().init({
+	apiKey: 'Your API Key'
+});
+
+var Hapi = require('hapi');
+
+// Create a server with a host and port
+var server = new Hapi.Server();
+server.connection({
+	host: 'localhost',
+	port: 8000
+});
+
+// Add the route
+server.route({
+	method: 'GET',
+	path: '/error',
+	handler: function(request, reply) {
+		throw new Error("We're not so hapi now!")
+	}
+});
+
+server.on('request-error', function(req, err) {
+	raygunClient.send(err, {}, function() {
+		console.log("Send to Raygun");
+		throw err;
+	}, req);
+});
+
+// Start the server
+server.start();</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				<table style="" class="crayon-table">
+					<tbody><tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-56764526dcc34178244935-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-2">2</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-4">4</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-6">6</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-8">8</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-10">10</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-12">12</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-14">14</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-16">16</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-18">18</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-20">20</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-22">22</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-24">24</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-26">26</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-28">28</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-30">30</div><div class="crayon-num" data-line="crayon-56764526dcc34178244935-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc34178244935-32">32</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-56764526dcc34178244935-1"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">raygun</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">require</span><span class="crayon-sy">(</span><span class="crayon-s">'raygun'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-2"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">raygunClient</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-v">raygun</span><span class="crayon-sy">.</span><span class="crayon-e">Client</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span class="crayon-e">init</span><span class="crayon-sy">(</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-56764526dcc34178244935-3"><span class="crayon-h">	</span><span class="crayon-v">apiKey</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-s">'Your API Key'</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-4"><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc34178244935-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-6"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">Hapi</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">require</span><span class="crayon-sy">(</span><span class="crayon-s">'hapi'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc34178244935-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-8"><span class="crayon-c">// Create a server with a host and port</span></div><div class="crayon-line" id="crayon-56764526dcc34178244935-9"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">server</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-v">Hapi</span><span class="crayon-sy">.</span><span class="crayon-e">Server</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-10"><span class="crayon-v">server</span><span class="crayon-sy">.</span><span class="crayon-e">connection</span><span class="crayon-sy">(</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-56764526dcc34178244935-11"><span class="crayon-h">	</span><span class="crayon-v">host</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-s">'localhost'</span><span class="crayon-sy">,</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-12"><span class="crayon-h">	</span><span class="crayon-v">port</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-cn">8000</span></div><div class="crayon-line" id="crayon-56764526dcc34178244935-13"><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-14">&nbsp;</div><div class="crayon-line" id="crayon-56764526dcc34178244935-15"><span class="crayon-c">// Add the route</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-16"><span class="crayon-v">server</span><span class="crayon-sy">.</span><span class="crayon-e">route</span><span class="crayon-sy">(</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-56764526dcc34178244935-17"><span class="crayon-h">	</span><span class="crayon-v">method</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-s">'GET'</span><span class="crayon-sy">,</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-18"><span class="crayon-h">	</span><span class="crayon-v">path</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-s">'/error'</span><span class="crayon-sy">,</span></div><div class="crayon-line" id="crayon-56764526dcc34178244935-19"><span class="crayon-h">	</span><span class="crayon-v">handler</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-v">request</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">reply</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-20"><span class="crayon-h">		</span><span class="crayon-st">throw</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-e">Error</span><span class="crayon-sy">(</span><span class="crayon-s">"We're not so hapi now!"</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-56764526dcc34178244935-21"><span class="crayon-h">	</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-22"><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc34178244935-23">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-24"><span class="crayon-v">server</span><span class="crayon-sy">.</span><span class="crayon-e">on</span><span class="crayon-sy">(</span><span class="crayon-s">'request-error'</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-v">req</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">err</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-56764526dcc34178244935-25"><span class="crayon-h">	</span><span class="crayon-v">raygunClient</span><span class="crayon-sy">.</span><span class="crayon-e">send</span><span class="crayon-sy">(</span><span class="crayon-v">err</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-sy">{</span><span class="crayon-sy">}</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-26"><span class="crayon-h">		</span><span class="crayon-v">console</span><span class="crayon-sy">.</span><span class="crayon-e">log</span><span class="crayon-sy">(</span><span class="crayon-s">"Send to Raygun"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc34178244935-27"><span class="crayon-h">		</span><span class="crayon-st">throw</span><span class="crayon-h"> </span><span class="crayon-v">err</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-28"><span class="crayon-h">	</span><span class="crayon-sy">}</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">req</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc34178244935-29"><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-30">&nbsp;</div><div class="crayon-line" id="crayon-56764526dcc34178244935-31"><span class="crayon-c">// Start the server</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc34178244935-32"><span class="crayon-v">server</span><span class="crayon-sy">.</span><span class="crayon-e">start</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0033 seconds] -->
+<p></p>
+<h2>Restify</h2>
+<p>Building REST Apis? There’s a module for that! And it’s brilliant. Meet <a href="http://mcavage.me/node-restify/" target="_blank">Restify</a>. But catching errors you ask – here you go!</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-56764526dcc3a431198190" class="crayon-syntax crayon-theme-raygun crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 12px; margin-bottom: 12px; font-size: 12px ! important; line-height: 15px ! important; height: auto;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px ! important; height: 18px ! important; line-height: 18px ! important; margin-top: -18px; display: none; position: absolute; z-index: 2;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button crayon-pressed" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" data-settings="dblclick" readonly="readonly" style="-moz-tab-size: 4; font-size: 12px ! important; line-height: 15px ! important; z-index: 0; opacity: 0; overflow: hidden;" wrap="soft">var raygun = require('raygun');
+var raygunClient = new raygun.Client().init({
+	apiKey: 'Your API Key'
+});
+
+var restify = require('restify');
+
+function throwAnError(req, res, next) {
+	throw new Error("Let's have a rest...ify");
+}
+
+var server = restify.createServer();
+server.get('/error', throwAnError);
+
+server.listen(8080, function() {
+	console.log('%s listening at %s', server.name, server.url);
+});
+
+server.on('uncaughtException', function(req, res, route, err, cb) {
+	raygunClient.send(err, {}, function() {
+		// Exit here - no point in going on!
+		process.exit(1);
+	}, req);
+});</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				<table style="" class="crayon-table">
+					<tbody><tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-56764526dcc3a431198190-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc3a431198190-2">2</div><div class="crayon-num" data-line="crayon-56764526dcc3a431198190-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc3a431198190-4">4</div><div class="crayon-num" data-line="crayon-56764526dcc3a431198190-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc3a431198190-6">6</div><div class="crayon-num" data-line="crayon-56764526dcc3a431198190-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc3a431198190-8">8</div><div class="crayon-num" data-line="crayon-56764526dcc3a431198190-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc3a431198190-10">10</div><div class="crayon-num" data-line="crayon-56764526dcc3a431198190-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc3a431198190-12">12</div><div class="crayon-num" data-line="crayon-56764526dcc3a431198190-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc3a431198190-14">14</div><div class="crayon-num" data-line="crayon-56764526dcc3a431198190-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc3a431198190-16">16</div><div class="crayon-num" data-line="crayon-56764526dcc3a431198190-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc3a431198190-18">18</div><div class="crayon-num" data-line="crayon-56764526dcc3a431198190-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc3a431198190-20">20</div><div class="crayon-num" data-line="crayon-56764526dcc3a431198190-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc3a431198190-22">22</div><div class="crayon-num" data-line="crayon-56764526dcc3a431198190-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc3a431198190-24">24</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-56764526dcc3a431198190-1"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">raygun</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">require</span><span class="crayon-sy">(</span><span class="crayon-s">'raygun'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc3a431198190-2"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">raygunClient</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-v">raygun</span><span class="crayon-sy">.</span><span class="crayon-e">Client</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span class="crayon-e">init</span><span class="crayon-sy">(</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-56764526dcc3a431198190-3"><span class="crayon-h">	</span><span class="crayon-v">apiKey</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-s">'Your API Key'</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc3a431198190-4"><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc3a431198190-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc3a431198190-6"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">restify</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">require</span><span class="crayon-sy">(</span><span class="crayon-s">'restify'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc3a431198190-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc3a431198190-8"><span class="crayon-t">function</span><span class="crayon-h"> </span><span class="crayon-e">throwAnError</span><span class="crayon-sy">(</span><span class="crayon-v">req</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">res</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">next</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-56764526dcc3a431198190-9"><span class="crayon-h">	</span><span class="crayon-st">throw</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-e">Error</span><span class="crayon-sy">(</span><span class="crayon-s">"Let's have a rest...ify"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc3a431198190-10"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-56764526dcc3a431198190-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc3a431198190-12"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">server</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">restify</span><span class="crayon-sy">.</span><span class="crayon-e">createServer</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc3a431198190-13"><span class="crayon-v">server</span><span class="crayon-sy">.</span><span class="crayon-e">get</span><span class="crayon-sy">(</span><span class="crayon-s">'/error'</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">throwAnError</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc3a431198190-14">&nbsp;</div><div class="crayon-line" id="crayon-56764526dcc3a431198190-15"><span class="crayon-v">server</span><span class="crayon-sy">.</span><span class="crayon-e">listen</span><span class="crayon-sy">(</span><span class="crayon-cn">8080</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc3a431198190-16"><span class="crayon-h">	</span><span class="crayon-v">console</span><span class="crayon-sy">.</span><span class="crayon-e">log</span><span class="crayon-sy">(</span><span class="crayon-s">'%s listening at %s'</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">server</span><span class="crayon-sy">.</span><span class="crayon-v">name</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">server</span><span class="crayon-sy">.</span><span class="crayon-v">url</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc3a431198190-17"><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc3a431198190-18">&nbsp;</div><div class="crayon-line" id="crayon-56764526dcc3a431198190-19"><span class="crayon-v">server</span><span class="crayon-sy">.</span><span class="crayon-e">on</span><span class="crayon-sy">(</span><span class="crayon-s">'uncaughtException'</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-v">req</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">res</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">route</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">err</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">cb</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc3a431198190-20"><span class="crayon-h">	</span><span class="crayon-v">raygunClient</span><span class="crayon-sy">.</span><span class="crayon-e">send</span><span class="crayon-sy">(</span><span class="crayon-v">err</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-sy">{</span><span class="crayon-sy">}</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-56764526dcc3a431198190-21"><span class="crayon-h">		</span><span class="crayon-c">// Exit here - no point in going on!</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc3a431198190-22"><span class="crayon-h">		</span><span class="crayon-v">process</span><span class="crayon-sy">.</span><span class="crayon-e">exit</span><span class="crayon-sy">(</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc3a431198190-23"><span class="crayon-h">	</span><span class="crayon-sy">}</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">req</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc3a431198190-24"><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0032 seconds] -->
+<p></p>
+<h2>Koa</h2>
+<p><a href="http://koajs.com/" target="_blank">Koa</a> is a newish 
+framework from the guys who did ExpressJS with a whole bunch of new 
+thinking. They made dealing with errors pretty easy. Because we have no 
+routes, this sample throws two errors, but that won’t happen normally 
+though of course!</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-56764526dcc40018950477" class="crayon-syntax crayon-theme-raygun crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 12px; margin-bottom: 12px; font-size: 12px ! important; line-height: 15px ! important; height: auto;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px ! important; height: 18px ! important; line-height: 18px ! important; margin-top: -18px; display: none; position: absolute; z-index: 2;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button crayon-pressed" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" data-settings="dblclick" readonly="readonly" style="-moz-tab-size: 4; font-size: 12px ! important; line-height: 15px ! important; z-index: 0; opacity: 0; overflow: hidden;" wrap="soft">var raygun = require('raygun');
+var raygunClient = new raygun.Client().init({
+	apiKey: 'Your API Key'
+});
+
+var koa = require('koa');
+var app = koa();
+
+app.use(function*() {
+	throw new Error("Oh-Koa, we're dead");
+});
+
+app.on('error', function(err, ctx) {
+	raygunClient.send(err, {}, function() {
+		// Exit here - no point in going on!
+		process.exit(1);
+	}, ctx.request);
+});
+
+app.listen(3000);</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				<table style="" class="crayon-table">
+					<tbody><tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-56764526dcc40018950477-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc40018950477-2">2</div><div class="crayon-num" data-line="crayon-56764526dcc40018950477-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc40018950477-4">4</div><div class="crayon-num" data-line="crayon-56764526dcc40018950477-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc40018950477-6">6</div><div class="crayon-num" data-line="crayon-56764526dcc40018950477-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc40018950477-8">8</div><div class="crayon-num" data-line="crayon-56764526dcc40018950477-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc40018950477-10">10</div><div class="crayon-num" data-line="crayon-56764526dcc40018950477-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc40018950477-12">12</div><div class="crayon-num" data-line="crayon-56764526dcc40018950477-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc40018950477-14">14</div><div class="crayon-num" data-line="crayon-56764526dcc40018950477-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc40018950477-16">16</div><div class="crayon-num" data-line="crayon-56764526dcc40018950477-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc40018950477-18">18</div><div class="crayon-num" data-line="crayon-56764526dcc40018950477-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc40018950477-20">20</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-56764526dcc40018950477-1"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">raygun</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">require</span><span class="crayon-sy">(</span><span class="crayon-s">'raygun'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc40018950477-2"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">raygunClient</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-v">raygun</span><span class="crayon-sy">.</span><span class="crayon-e">Client</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span class="crayon-e">init</span><span class="crayon-sy">(</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-56764526dcc40018950477-3"><span class="crayon-h">	</span><span class="crayon-v">apiKey</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-s">'Your API Key'</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc40018950477-4"><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc40018950477-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc40018950477-6"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">koa</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">require</span><span class="crayon-sy">(</span><span class="crayon-s">'koa'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc40018950477-7"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">app</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">koa</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc40018950477-8">&nbsp;</div><div class="crayon-line" id="crayon-56764526dcc40018950477-9"><span class="crayon-v">app</span><span class="crayon-sy">.</span><span class="crayon-st">use</span><span class="crayon-sy">(</span><span class="crayon-t">function</span><span class="crayon-o">*</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc40018950477-10"><span class="crayon-h">	</span><span class="crayon-st">throw</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-e">Error</span><span class="crayon-sy">(</span><span class="crayon-s">"Oh-Koa, we're dead"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc40018950477-11"><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc40018950477-12">&nbsp;</div><div class="crayon-line" id="crayon-56764526dcc40018950477-13"><span class="crayon-v">app</span><span class="crayon-sy">.</span><span class="crayon-e">on</span><span class="crayon-sy">(</span><span class="crayon-s">'error'</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-v">err</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">ctx</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc40018950477-14"><span class="crayon-h">	</span><span class="crayon-v">raygunClient</span><span class="crayon-sy">.</span><span class="crayon-e">send</span><span class="crayon-sy">(</span><span class="crayon-v">err</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-sy">{</span><span class="crayon-sy">}</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-56764526dcc40018950477-15"><span class="crayon-h">		</span><span class="crayon-c">// Exit here - no point in going on!</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc40018950477-16"><span class="crayon-h">		</span><span class="crayon-v">process</span><span class="crayon-sy">.</span><span class="crayon-e">exit</span><span class="crayon-sy">(</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc40018950477-17"><span class="crayon-h">	</span><span class="crayon-sy">}</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">ctx</span><span class="crayon-sy">.</span><span class="crayon-v">request</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc40018950477-18"><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc40018950477-19">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc40018950477-20"><span class="crayon-v">app</span><span class="crayon-sy">.</span><span class="crayon-e">listen</span><span class="crayon-sy">(</span><span class="crayon-cn">3000</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0024 seconds] -->
+<p></p>
+<h2>But I’m feeling hardcore and want to deal with raw HTTP?</h2>
+<p>Boom, nice work! You’re probably pretty good at NodeJS already, so 
+you don’t really need help right? Well I’m going to anyway! The easiest 
+way to capture errors without a framework is using the domains feature 
+of NodeJS. You simply wrap your app up in a domain and deal with the 
+error event.</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-56764526dcc45513978351" class="crayon-syntax crayon-theme-raygun crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 12px; margin-bottom: 12px; font-size: 12px ! important; line-height: 15px ! important; height: auto;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px ! important; height: 18px ! important; line-height: 18px ! important; margin-top: -18px; display: none; position: absolute; z-index: 2;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button crayon-pressed" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" data-settings="dblclick" readonly="readonly" style="-moz-tab-size: 4; font-size: 12px ! important; line-height: 15px ! important; z-index: 0; opacity: 0; overflow: hidden;" wrap="soft">var raygun = require('raygun');
+var raygunClient = new raygun.Client().init({
+	apiKey: 'Your API Key'
+});
+
+var domain = require('domain').create();
+domain.on('error', function(err) {
+	raygunClient.send(err, {}, function() {
+		process.exit();
+	});
+});
+
+domain.run(function() {
+	throw new Error("Feeling a bit hardcore here");
+});</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				<table style="" class="crayon-table">
+					<tbody><tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-56764526dcc45513978351-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc45513978351-2">2</div><div class="crayon-num" data-line="crayon-56764526dcc45513978351-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc45513978351-4">4</div><div class="crayon-num" data-line="crayon-56764526dcc45513978351-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc45513978351-6">6</div><div class="crayon-num" data-line="crayon-56764526dcc45513978351-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc45513978351-8">8</div><div class="crayon-num" data-line="crayon-56764526dcc45513978351-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc45513978351-10">10</div><div class="crayon-num" data-line="crayon-56764526dcc45513978351-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc45513978351-12">12</div><div class="crayon-num" data-line="crayon-56764526dcc45513978351-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-56764526dcc45513978351-14">14</div><div class="crayon-num" data-line="crayon-56764526dcc45513978351-15">15</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-56764526dcc45513978351-1"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">raygun</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">require</span><span class="crayon-sy">(</span><span class="crayon-s">'raygun'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc45513978351-2"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">raygunClient</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-v">raygun</span><span class="crayon-sy">.</span><span class="crayon-e">Client</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span class="crayon-e">init</span><span class="crayon-sy">(</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-56764526dcc45513978351-3"><span class="crayon-h">	</span><span class="crayon-v">apiKey</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-s">'Your API Key'</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc45513978351-4"><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc45513978351-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc45513978351-6"><span class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">domain</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">require</span><span class="crayon-sy">(</span><span class="crayon-s">'domain'</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span class="crayon-e">create</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc45513978351-7"><span class="crayon-v">domain</span><span class="crayon-sy">.</span><span class="crayon-e">on</span><span class="crayon-sy">(</span><span class="crayon-s">'error'</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-v">err</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc45513978351-8"><span class="crayon-h">	</span><span class="crayon-v">raygunClient</span><span class="crayon-sy">.</span><span class="crayon-e">send</span><span class="crayon-sy">(</span><span class="crayon-v">err</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-sy">{</span><span class="crayon-sy">}</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-56764526dcc45513978351-9"><span class="crayon-h">		</span><span class="crayon-v">process</span><span class="crayon-sy">.</span><span class="crayon-e">exit</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc45513978351-10"><span class="crayon-h">	</span><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc45513978351-11"><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc45513978351-12">&nbsp;</div><div class="crayon-line" id="crayon-56764526dcc45513978351-13"><span class="crayon-v">domain</span><span class="crayon-sy">.</span><span class="crayon-e">run</span><span class="crayon-sy">(</span><span class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-56764526dcc45513978351-14"><span class="crayon-h">	</span><span class="crayon-st">throw</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-e">Error</span><span class="crayon-sy">(</span><span class="crayon-s">"Feeling a bit hardcore here"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-56764526dcc45513978351-15"><span class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0020 seconds] -->
+<p><strong>Interested in trying professional-grade error tracking?</strong> All of these insights and more are available with Raygun, so <a href="https://app.raygun.io/signup" target="_blank">start your free 30-day trial now</a>, no credit card needed. Happy exception blasting!</p>
+
+<div class="post-share">
+	<h4>Share this post</h4>
+
+	<div class="row">
+		<div class="medium-4 columns">
+			<a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fraygun.io%2Fblog%2F2015%2F04%2Fnodejs-web-frameworks-and-capturing-errors%2F&amp;p[images][0]=https%3A%2F%2Fraygun.io%2Fblog%2Fwp-content%2Fuploads%2F2015%2F03%2Fraygunmodel.png&amp;p[title]=NodeJS+web+frameworks+and+capturing+errors&amp;p[summary]=So+you%E2%80%99re+just+about+to+start+your+sweet+new+NodeJS+project%3F+Awesome%21+Let%E2%80%99s+be+friends.+Since+you%E2%80%99re+just+starting+out%2C+you+probably+haven%E2%80%99t+thought+about+exceptions+yet%2C+have+you%3F+No+worries+%26%238211%3B+I+won%E2%80%99t+tell+anyone.+Let%E2%80%99s+have+a+look+at+how+the%C2%A0raygun4node+module+integrates+with+a+few+of+the+NodeJS+web+frameworks+you%E2%80%99ll+most..." class="button facebook" target="_blank" title="Share on Facebook"><i class="fa fa-facebook fa-right-margin"></i> Facebook</a>
+		</div>
+		<div class="medium-4 columns">
+			<a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fraygun.io%2Fblog%2F2015%2F04%2Fnodejs-web-frameworks-and-capturing-errors%2F&amp;text=Check+out+NodeJS+web+frameworks+and+capturing+errors+on+The+Raygun+Blog&amp;via=raygunio" class="button twitter" target="_blank" title="Tweet about this post"><i class="fa fa-twitter fa-right-margin"></i> Twitter</a>
+		</div>
+		<div class="medium-4 columns">
+			<a href="https://plus.google.com/share?url=https%3A%2F%2Fraygun.io%2Fblog%2F2015%2F04%2Fnodejs-web-frameworks-and-capturing-errors%2F" class="button google-plus" target="_blank" title="Share on Google+"><i class="fa fa-google-plus fa-right-margin"></i> Google+</a>
+		</div>
+	</div>
+
+</div>
+
+
+	</div><!-- .entry-content -->
+	
+	</article><!-- #post-## -->
+		<nav class="navigation post-navigation" role="navigation">
+			<h1 class="screen-reader-text">Post navigation</h1>
+
+			<div class="nav-links">
+				<a href="https://raygun.io/blog/2015/04/top-4-java-exceptions-raygun-can-help-fix/" rel="prev"><span title="" aria-describedby="tooltip-iie4dk520" data-selector="tooltip-iie4dk520" data-tooltip="" aria-haspopup="true" data-options="disable_for_touch:true" class="meta-nav">Previous Post</span></a><a href="https://raygun.io/blog/2015/04/discover-causes-of-common-python-exceptions/" rel="next"><span title="" aria-describedby="tooltip-iie4dk521" data-selector="tooltip-iie4dk521" data-tooltip="" aria-haspopup="true" data-options="disable_for_touch:true" class="meta-nav">Next Post</span></a>			</div>
+			<!-- .nav-links -->
+		</nav><!-- .navigation -->
+	
+<div id="comments" class="comments-area">
+
+	
+					<div id="respond" class="comment-respond">
+			<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://raygun.io/blog/2015/04/nodejs-web-frameworks-and-capturing-errors/#respond" style="display:none;">Cancel reply</a></small></h3>				<form action="https://raygun.io/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate="">
+					<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" aria-required="true" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" size="30" aria-required="true" required="required" type="text"></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" size="30" aria-describedby="email-notes" aria-required="true" required="required" type="email"></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" size="30" type="url"></p>
+<p class="form-submit"><input name="submit" id="submit" class="submit" value="Post Comment" type="submit"> <input name="comment_post_ID" value="4340" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+</p><p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" value="0ac57d7e50" type="hidden"></p><p class="comment-subscription-form"><input name="subscribe_comments" id="subscribe_comments" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" type="checkbox"> <label class="subscribe-label" id="subscribe-label" for="subscribe_comments">Notify me of follow-up comments by email.</label></p><p class="comment-subscription-form"><input name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" type="checkbox"> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Notify me of new posts by email.</label></p><p style="display: none;"></p>				<input id="ak_js" name="ak_js" value="1450590912618" type="hidden"></form>
+					</div><!-- #respond -->
+		
+</div><!-- #comments -->
+
+	</div><!-- #primary -->
+
+	
+
+<div id="content-secondary" class="medium-4 large-4 columns">
+
+    <div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
+        <aside id="newsletter-subscribe-2" class="widget sidebar-newsletter"><h3 class="widget-title">Raygun Newsletter</h3><p>Subscribe to updates - Receive developer tips, tricks, tutorials and news from the Raygun team!</p>
+		<!-- Begin MailChimp Signup Form -->
+
+			<div id="mc_embed_signup">
+				<form action="https://raygun.us5.list-manage.com/subscribe/post?u=d60a62fe678d5fcd335a58f80&amp;id=0af8e6c179" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+					<div id="mc_embed_signup_scroll">
+						<div class="mc-field-group">
+							<label for="mce-EMAIL" class="screen-reader-text">Subscribe to our mailing list</label>
+							<input name="EMAIL" class="required email input-email full-width" id="mce-EMAIL" placeholder="Your email address" required="" type="email">
+						</div>
+						<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+						<div style="position: absolute; left: -5000px;"><input name="b_d60a62fe678d5fcd335a58f80_0af8e6c179" tabindex="-1" type="text"></div>
+						<div class="clear">
+							<input value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button green full-width" type="submit"></div>
+					</div>
+				</form>
+			</div>
+
+
+
+			<!--End mc_embed_signup-->
+		</aside>		<aside id="recent-posts-5" class="widget widget_recent_entries">		<h3 class="widget-title">Recent</h3>		<ul>
+					<li>
+				<a href="https://raygun.io/blog/2015/12/10-new-raygun-features-6-assign-error-groups-to-usersteams/">10 new Raygun features: #6 Assign error groups to users/teams</a>
+						</li>
+					<li>
+				<a href="https://raygun.io/blog/2015/12/10-new-raygun-features-5-fast-error-group-selection/">10 new Raygun features: #5 Fast error group selection</a>
+						</li>
+					<li>
+				<a href="https://raygun.io/blog/2015/12/10-new-raygun-features-4-clickable-urls/">10 new Raygun features: #4 Clickable URLs</a>
+						</li>
+					<li>
+				<a href="https://raygun.io/blog/2015/12/10-new-raygun-features-3-export-users-to-csv/">10 new Raygun features: #3 Export users to CSV</a>
+						</li>
+					<li>
+				<a href="https://raygun.io/blog/2015/12/what-ive-learned-about-developers-in-4-years/">What I’ve learned about developers in 4 years at Raygun</a>
+						</li>
+				</ul>
+		</aside>		<aside id="text-2" class="widget widget_text"><h3 class="widget-title">Blogs We Like</h3>			<div class="textwidget"><a href="http://derickbailey.com/">Derick Bailey</a>
+<br>
+<br>
+<a href="http://www.sarahmei.com/">Sarah Mei</a>
+<br>
+<br>
+<a href="http://www.jasonhand.com/">Jason Hand</a>
+<br>
+<br>
+<a href="http://www.troyhunt.com/">Troy Hunt</a>
+<br>
+<br>
+<a href="http://www.schneems.com/">Richard Schneeman</a>
+<br>
+<br>
+<a href="http://blog.jessitron.com/">Jessica Kerr</a>
+<br>
+<br>
+<a href="http://www.ombulabs.com/blog">Ombu Labs</a>
+</div>
+		</aside><aside id="zd_sticky_content-2" class="widget zd-sticky-content affix-top"><a href="https://raygun.io/products/real-user-monitoring?utm_source=blog&amp;utm_medium=blog-sidebar-banner&amp;utm_campaign=blog-banner-dark" target="_self">
+<img src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/20151021-Real-User-Monitoring-336x280.jpg" alt="Real User Monitoring" height="280" width="336">
+</a>
+
+
+		</aside>    </div><!-- #primary-sidebar -->
+</div><!-- #secondary -->
+</div><!-- #main -->
+
+
+</div><!-- #main-wrapper -->
+
+
+<!-- footer starts here -->
+<footer class="footer-main-block">
+	<div id="footer-primary" class="row flex-row-lg-5">
+		<div class="columns medium-4">
+			<h4>Solutions</h4>
+			<ul>
+				<li><a href="https://raygun.io/products/crash-reporting" class="link">Crash Reporting</a></li>
+				<li><a href="https://raygun.io/products/real-user-monitoring" class="link">Pulse</a></li>
+				<li><a href="https://raygun.io/features" class="link">Feature List</a></li>
+				<li><a href="https://raygun.io/features/plugins" class="link">Integrations</a></li>
+				<li><a href="https://raygun.io/docs/languages" class="link">Languages</a></li>
+			</ul>
+		</div>
+		<div class="columns medium-4">
+			<h4>Support</h4>
+			<ul>
+				<li><a href="https://raygun.io/docs" class="link">Documentation</a></li>
+				<li><a href="https://raygun.io/forums" class="link">Forums</a></li>
+				<li><a href="https://raygun.io/faq" class="link">FAQ</a></li>
+				<li><a href="https://raygun.io/thinktank/forum/2" class="link">Feature Requests</a></li>
+				<li><a href="https://raygun.io/blog" class="link">Product Updates</a></li>
+			</ul>
+		</div>
+		<div class="columns medium-4">
+			<h4>Company</h4>
+			<ul>
+				<li><a href="https://raygun.io/about" class="link">About</a></li>
+				<li><a href="https://raygun.io/about/press" class="link">Media</a></li>
+				<li><a href="https://raygun.io/about/team" class="link">Meet the Team</a></li>
+				<li><a href="https://raygun.workable.com/" class="link">Join the Team</a></li>
+				<li><a href="https://raygun.io/about/contact" class="link">Contact</a></li>
+			</ul>
+		</div>
+		<div class="columns medium-4">
+			<h4>Resources</h4>
+			<ul>
+				<li><a href="https://raygun.io/case-study" class="link">Case Studies</a></li>
+				<li><a href="https://raygun.io/blog/recent" class="link">Blog</a></li>
+				<li><a href="https://raygun.io/blog/community" class="link">Community</a></li>
+				<li><a href="https://raygun.io/blog/resources" class="link">Resources</a></li>
+			</ul>
+		</div>
+		<div class="columns medium-4 end">
+			<h4>Social</h4>
+			<ul>
+				<li><a href="https://twitter.com/raygunio" class="link">Twitter</a></li>
+				<li><a href="https://facebook.com/raygundotio" class="link">Facebook</a></li>
+				<li><a href="https://plus.google.com/u/1/118086323022965624180/posts" class="link">Google Plus</a></li>
+				<li><a href="https://github.com/MindscapeHQ" class="link">GitHub</a></li>
+				<li><a href="https://linkedin.com/company/raygun-io" class="link">Linkedin</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div id="footer-secondary" class="row">
+		<div class="column">
+			<div class="footer-sub-nav">
+				<ul>
+					<li><a class="list-item fl link" href="https://raygun.io/privacy">Privacy Policy</a></li>
+					<li><a class="list-item fl link" href="https://raygun.io/terms">Terms and Conditions</a></li>
+				</ul>
+			</div>
+
+			<div class="footer-copyright">
+				<span class="copyright-text">© Copyright Raygun 2015</span>
+			</div>
+		</div>
+	</div>
+
+</footer>
+<!-- footer ends here -->
+</div><!-- #page -->
+
+	<div style="display:none">
+	</div>
+<script type="text/javascript" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/form.js"></script>
+<script type="text/javascript" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/devicepx-jetpack.js"></script>
+<script type="text/javascript" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/comment-reply.js"></script>
+<script type="text/javascript" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/ajax-page-loading.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var ZDGlobals = {"templateDirectoryURI":"https:\/\/raygun.io\/blog\/wp-content\/themes\/rayguntheme-build-20151217"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/rayguntheme-client.js"></script>
+<script type="text/javascript" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/wp-embed.js"></script>
+<script type="text/javascript" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/e-201551.js" async="" defer="defer"></script>
+<script type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.8.2',blog:'48861792',post:'4340',tz:'13',srv:'raygun.io'} ]);
+	_stq.push([ 'clickTrackerInit', '48861792', '4340' ]);
+</script>
+	<!-- Perfect Audience -->
+	<script type="text/javascript">
+		(function() {
+			window._pa = window._pa || {};
+			var pa = document.createElement('script'); pa.type = 'text/javascript'; pa.async = true;
+			pa.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + "//tag.perfectaudience.com/serve/51412f379bcb66000200028a.js";
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(pa, s);
+		})();
+	</script>
+
+	<!-- Twitter Conversion Tags -->
+	<script type="text/javascript">
+		twttr.conversion.trackPid('l4wqk');
+	</script>
+	<noscript>
+		<img height="1" width="1" style="display:none;" alt="" src="https://analytics.twitter.com/i/adsct?txn_id=l4wqk&amp;p_id=Twitter" />
+		<img height="1" width="1" style="display:none;" alt="" src="//t.co/i/adsct?txn_id=l4wqk&amp;p_id=Twitter" />
+	</noscript>
+
+	<!-- Google Code for Remarketing tag -->
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		var google_conversion_id = 998844126;
+		var google_conversion_label = "GykTCPqdzAMQ3s2k3AM";
+		var google_custom_params = window.google_tag_params;
+		var google_remarketing_only = true;
+		/* ]]> */
+	</script>
+	<script type="text/javascript" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/conversion.js">
+	</script><iframe name="google_conversion_frame" title="Google conversion frame" src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/998844126/?random=1450590913248&amp;cv=8&amp;fst=1450590913248&amp;num=1&amp;fmt=1&amp;label=GykTCPqdzAMQ3s2k3AM&amp;guid=ON&amp;u_h=768&amp;u_w=1366&amp;u_ah=738&amp;u_aw=1366&amp;u_cd=24&amp;u_his=2&amp;u_tz=0&amp;u_java=false&amp;u_nplug=7&amp;u_nmime=52&amp;frm=0&amp;url=https%3A//raygun.io/blog/2015/04/nodejs-web-frameworks-and-capturing-errors/&amp;ref=https%3A//www.google.com" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" frameborder="0" height="13" width="300">&lt;img
+ height="1" width="1" border="0" alt="" 
+src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/998844126/?frame=0&amp;random=1450590913248&amp;cv=8&amp;fst=1450590913248&amp;num=1&amp;fmt=1&amp;label=GykTCPqdzAMQ3s2k3AM&amp;guid=ON&amp;u_h=768&amp;u_w=1366&amp;u_ah=738&amp;u_aw=1366&amp;u_cd=24&amp;u_his=2&amp;u_tz=0&amp;u_java=false&amp;u_nplug=7&amp;u_nmime=52&amp;frm=0&amp;url=https%3A//raygun.io/blog/2015/04/nodejs-web-frameworks-and-capturing-errors/&amp;ref=https%3A//www.google.com"
+ /&gt;</iframe>
+	<noscript>
+		<div style="display:inline;">
+			<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/998844126/?value=0&amp;label=GykTCPqdzAMQ3s2k3AM&amp;guid=ON&amp;script=0"/>
+		</div>
+	</noscript>
+
+	<!-- Clicky -->
+	<script type="text/javascript">
+		var clicky_site_ids = clicky_site_ids || [];
+		clicky_site_ids.push(66642701);
+		(function() {
+			var s = document.createElement('script');
+			s.type = 'text/javascript';
+			s.async = true;
+			s.src = '//static.getclicky.com/js';
+			( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
+		})();
+	</script>
+	<noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66642701ns.gif" /></p></noscript>
+
+	<script>jQuery(document).foundation();</script><span data-selector="tooltip-iie4dk520" id="tooltip-iie4dk520" class="tooltip" role="tooltip">Top 4 Java exceptions Raygun can help fix<span class="nub"></span></span><span data-selector="tooltip-iie4dk521" id="tooltip-iie4dk521" class="tooltip" role="tooltip">Discover causes of common Python exceptions<span class="nub"></span></span><img id="wpstats" src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/g.gif">
+
+	<script type="text/javascript">
+		var _sf_async_config = { uid: 8106, domain: 'raygun.io', useCanonical: true };
+		(function() {
+			function loadChartbeat() {
+				window._sf_endpt = (new Date()).getTime();
+				var e = document.createElement('script');
+				e.setAttribute('language', 'javascript');
+				e.setAttribute('type', 'text/javascript');
+				e.setAttribute('src','//static.chartbeat.com/js/chartbeat.js');
+				document.body.appendChild(e);
+			};
+			var oldonload = window.onload;
+			window.onload = (typeof window.onload != 'function') ?
+				loadChartbeat : function() { oldonload(); loadChartbeat(); };
+		})();
+	</script>
+
+	<!-- Save Google Click ID and UTM information in cookie -->
+	<script type="text/javascript">
+		function setCookie(name, value, days) {
+			var date = new Date();
+			date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+			var expires = "; expires=" + date.toGMTString();
+
+			var domainWithoutSubdomain = window.location.host;
+			var parts = domainWithoutSubdomain.split('.');
+			domainWithoutSubdomain = '.' + parts[parts.length - 2] + '.' + parts[parts.length - 1];
+
+			var domain = "; domain=" + domainWithoutSubdomain;
+			var path = '; path=/';
+			document.cookie = name + "=" + value + expires + domain + path;
+		}
+		function getParam(p) {
+			var match = RegExp('[?&]' + p + '=([^&]*)').exec(window.location.search);
+			return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+		}
+		var gclid = getParam('gclid');
+		if (gclid) {
+			var gclsrc = getParam('gclsrc');
+			if (!gclsrc || gclsrc.indexOf('aw') !== -1) {
+				setCookie('gclid', gclid, 90);
+			}
+		}
+		var utmSource = getParam('utm_source');
+		if (utmSource) {
+			setCookie('utm_source', utmSource, 100);
+		}
+		var utmCampaign = getParam('utm_campaign');
+		if (utmCampaign) {
+			setCookie('utm_campaign', utmCampaign, 100);
+		}
+		var utmContent = getParam('utm_content');
+		if (utmContent) {
+			setCookie('utm_content', utmContent, 100);
+		}
+		var utmMedium = getParam('utm_medium');
+		if (utmMedium) {
+			setCookie('utm_medium', utmMedium, 100);
+		}
+		if (utmCampaign || utmSource || utmMedium) {
+			setCookie('initial_landing_page', window.location.pathname, 100);
+		}
+	</script>
+
+	<script>
+		rg4js('apiKey', '7jhqyu9xZN0hmuSXXovYpw==');
+		rg4js('attach', true);
+		rg4js('enablePulse', true);
+
+			</script>
+
+	
+<script>jQuery(document).foundation();</script>
+
+
+<script src="NodeJS%20web%20frameworks%20and%20capturing%20errors%20-%20The%20Raygun%20Blog_fichiers/chartbeat.js" type="text/javascript" language="javascript"></script></body></html>

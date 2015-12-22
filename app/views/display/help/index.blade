@@ -1,0 +1,34 @@
+@extends(layouts/help.blade)
+
+@section(body)
+
+    <p>le framework elife utilise <a href="https://nodejs.org/">NodeJs</a> comme language serveur.</p>
+
+    <p>il est basé sur le framework <a href="http://expressjs.com/">Express</a>, et utilise <a href="http://bower.io/">bower</a> pour la gestion des dépendences au niveau des scripts côté client</p>
+
+    <p>il s'inspire des fonctionnalité de <a href="laravel.com/docs/4.2">laravel</a> 4.2 pour fournir un environnement de dévéloppement facile a prendre a main</p>
+
+    <p>le moteur de template EBlade pour Express <a href="http://laravel.com/docs/4.2/templates">Blade</a> est basé sur le moteur de template blade de laravel</p>
+
+
+    <div class = "images-box" >
+        <a href="https://nodejs.org/"><img src = "@asset(images/nodejs-logo.png)" /></a>
+
+        <a href="http://expressjs.com/"><img src = "@asset(images/express-logo.png)" /></a>
+
+        <a href="laravel.com/docs/4.2"><img src = "@asset(images/Laravel_logo.png)" /></a>
+
+        <a href="http://bower.io/"><img src = "@asset(images/bower_logo.png)" /></a>
+    </div>
+
+
+@endsection
+
+
+@section(script)
+
+    <script type="text/javascript">
+        console.log("Hi Comment ca va?");
+    </script>
+
+@endsection

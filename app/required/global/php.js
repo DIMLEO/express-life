@@ -445,7 +445,7 @@ is_error = function(variable){
 };
 
 
-function array_map(callback) {
+array_map = function(callback) {
     //  discuss at: http://phpjs.org/functions/array_map/
     // original by: Andrea Giammarchi (http://webreflection.blogspot.com)
     // improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
@@ -495,7 +495,7 @@ function array_map(callback) {
 
     return tmp_ar;
 }
-function array_merge() {
+array_merge = function() {
     //  discuss at: http://phpjs.org/functions/array_merge/
     // original by: Brett Zamir (http://brett-zamir.me)
     // bugfixed by: Nate
@@ -557,7 +557,7 @@ function array_merge() {
     }
     return retObj;
 }
-function array_keys(input, search_value, argStrict) {
+array_keys = function(input, search_value, argStrict) {
     //  discuss at: http://phpjs.org/functions/array_keys/
     // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
     //    input by: Brett Zamir (http://brett-zamir.me)
@@ -599,7 +599,7 @@ function array_keys(input, search_value, argStrict) {
     return tmp_arr;
 }
 
-function array_sum(array) {
+array_sum = function(array) {
     //  discuss at: http://phpjs.org/functions/array_sum/
     // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
     // bugfixed by: Nate
@@ -632,7 +632,7 @@ function array_sum(array) {
     return sum;
 }
 
-function count(mixed_var, mode) {
+count = function(mixed_var, mode) {
     //  discuss at: http://phpjs.org/functions/count/
     // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
     //    input by: Waldo Malqui Silva
@@ -673,7 +673,7 @@ function count(mixed_var, mode) {
     return cnt;
 }
 
-function in_array(needle, haystack, argStrict) {
+in_array = function(needle, haystack, argStrict) {
     //  discuss at: http://phpjs.org/functions/in_array/
     // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
     // improved by: vlado houba
@@ -713,7 +713,7 @@ function in_array(needle, haystack, argStrict) {
 
     return false;
 }
-function range(low, high, step) {
+range = function(low, high, step) {
     //  discuss at: http://phpjs.org/functions/range/
     // original by: Waldo Malqui Silva
     //   example 1: range ( 0, 12 );
@@ -758,7 +758,7 @@ function range(low, high, step) {
     return matrix;
 }
 
-function time() {
+time = function() {
     //  discuss at: http://phpjs.org/functions/time/
     // original by: GeekFG (http://geekfg.blogspot.com)
     // improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
@@ -771,7 +771,7 @@ function time() {
     return Math.floor(new Date()
         .getTime() / 1000);
 }
-function strtotime(text, now) {
+strtotime = function(text, now) {
     //  discuss at: http://phpjs.org/functions/strtotime/
     //     version: 1109.2016
     // original by: Caio Ariede (http://caioariede.com)
@@ -1027,7 +1027,7 @@ function strtotime(text, now) {
     return (date.getTime() / 1000);
 }
 
-function microtime(get_as_float) {
+microtime = function(get_as_float) {
     //  discuss at: http://phpjs.org/functions/microtime/
     // original by: Paulo Freitas
     //   example 1: timeStamp = microtime(true);
@@ -1041,7 +1041,7 @@ function microtime(get_as_float) {
     return (get_as_float) ? now : (Math.round((now - s) * 1000) / 1000) + ' ' + s;
 }
 
-function date(format, timestamp) {
+date = function(format, timestamp) {
     //  discuss at: http://phpjs.org/functions/date/
     // original by: Carlos R. L. Rodrigues (http://www.jsfromhell.com)
     // original by: gettimeofday
@@ -1323,7 +1323,7 @@ function date(format, timestamp) {
     return this.date(format, timestamp);
 }
 
-function function_exists(func_name) {
+function_exists = function(func_name) {
     //  discuss at: http://phpjs.org/functions/function_exists/
     // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
     // improved by: Steve Clay
@@ -1333,13 +1333,14 @@ function function_exists(func_name) {
     //   returns 1: true
 
     if (typeof func_name === 'string') {
-        func_name = this.window[func_name];
+        try {
+            func_name = this.window[func_name];
+        }catch(e){}
     }
     return typeof func_name === 'function';
 }
 
-
-function rand(min, max) {
+rand = function(min, max) {
     //  discuss at: http://phpjs.org/functions/rand/
     // original by: Leslie Hoare
     // bugfixed by: Onno Marsman
@@ -1392,60 +1393,7 @@ function rand(min, max) {
      */
 }
 
-function rand(min, max) {
-    //  discuss at: http://phpjs.org/functions/rand/
-    // original by: Leslie Hoare
-    // bugfixed by: Onno Marsman
-    //        note: See the commented out code below for a version which will work with our experimental (though probably unnecessary) srand() function)
-    //   example 1: rand(1, 1);
-    //   returns 1: 1
-
-    var argc = arguments.length;
-    if (argc === 0) {
-        min = 0;
-        max = 2147483647;
-    } else if (argc === 1) {
-        throw new Error('Warning: rand() expects exactly 2 parameters, 1 given');
-    }
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-
-    /*
-     // See note above for an explanation of the following alternative code
-
-     // +   reimplemented by: Brett Zamir (http://brett-zamir.me)
-     // -    depends on: srand
-     // %          note 1: This is a very possibly imperfect adaptation from the PHP source code
-     var rand_seed, ctx, PHP_RAND_MAX=2147483647; // 0x7fffffff
-
-     if (!this.php_js || this.php_js.rand_seed === undefined) {
-     this.srand();
-     }
-     rand_seed = this.php_js.rand_seed;
-
-     var argc = arguments.length;
-     if (argc === 1) {
-     throw new Error('Warning: rand() expects exactly 2 parameters, 1 given');
-     }
-
-     var do_rand = function (ctx) {
-     return ((ctx * 1103515245 + 12345) % (PHP_RAND_MAX + 1));
-     };
-
-     var php_rand = function (ctxArg) { // php_rand_r
-     this.php_js.rand_seed = do_rand(ctxArg);
-     return parseInt(this.php_js.rand_seed, 10);
-     };
-
-     var number = php_rand(rand_seed);
-
-     if (argc === 2) {
-     number = min + parseInt(parseFloat(parseFloat(max) - min + 1.0) * (number/(PHP_RAND_MAX + 1.0)), 10);
-     }
-     return number;
-     */
-}
-
-function md5(str) {
+md5 = function(str) {
     //  discuss at: http://phpjs.org/functions/md5/
     // original by: Webtoolkit.info (http://www.webtoolkit.info/)
     // improved by: Michael White (http://getsprink.com)
@@ -1658,7 +1606,7 @@ function md5(str) {
     return temp.toLowerCase();
 }
 
-function sha1(str) {
+sha1 = function(str) {
     //  discuss at: http://phpjs.org/functions/sha1/
     // original by: Webtoolkit.info (http://www.webtoolkit.info/)
     // improved by: Michael White (http://getsprink.com)
@@ -1805,7 +1753,7 @@ function sha1(str) {
     return temp.toLowerCase();
 }
 
-function utf8_decode(str_data) {
+utf8_decode = function(str_data) {
     //  discuss at: http://phpjs.org/functions/utf8_decode/
     // original by: Webtoolkit.info (http://www.webtoolkit.info/)
     //    input by: Aman Gupta
@@ -1859,7 +1807,7 @@ function utf8_decode(str_data) {
     return tmp_arr.join('');
 }
 
-function utf8_encode(argString) {
+utf8_encode = function(argString) {
     //  discuss at: http://phpjs.org/functions/utf8_encode/
     // original by: Webtoolkit.info (http://www.webtoolkit.info/)
     // improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
@@ -1928,7 +1876,7 @@ function utf8_encode(argString) {
     return utftext;
 }
 
-function mktime() {
+mktime = function() {
     //  discuss at: http://phpjs.org/functions/mktime/
     // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
     // improved by: baris ozdil
@@ -1998,4 +1946,36 @@ function mktime() {
     // Divide milliseconds by 1000 to return seconds and drop decimal.
     // Add 1 second if negative or it'll be off from PHP by 1 second.
     return (d.getTime() / 1e3 >> 0) - (d.getTime() < 0);
+}
+
+basename = function(path, suffix) {
+    //  discuss at: http://phpjs.org/functions/basename/
+    // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // improved by: Ash Searle (http://hexmen.com/blog/)
+    // improved by: Lincoln Ramsay
+    // improved by: djmix
+    // improved by: Dmitry Gorelenkov
+    //   example 1: basename('/www/site/home.htm', '.htm');
+    //   returns 1: 'home'
+    //   example 2: basename('ecra.php?p=1');
+    //   returns 2: 'ecra.php?p=1'
+    //   example 3: basename('/some/path/');
+    //   returns 3: 'path'
+    //   example 4: basename('/some/path_ext.ext/','.ext');
+    //   returns 4: 'path_ext'
+
+    var b = path;
+    var lastChar = b.charAt(b.length - 1);
+
+    if (lastChar === '/' || lastChar === '\\') {
+        b = b.slice(0, -1);
+    }
+
+    b = b.replace(/^.*[\/\\]/g, '');
+
+    if (typeof suffix === 'string' && b.substr(b.length - suffix.length) == suffix) {
+        b = b.substr(0, b.length - suffix.length);
+    }
+
+    return b;
 }

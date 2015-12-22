@@ -1,12 +1,9 @@
 
 var boot =  require('./app/bootstrap/boot');
 
-//if database systeme manager exists
+boot.start(function(){
 
-if($dbsm.ready){
-    $dbsm.ready(function(){
+    //Application is ready
+    console.log('Application is ready');
 
-        console.log('Database is Ready');
-
-    });
-}
+});

@@ -35,7 +35,8 @@ $_POST = {};
 $_FILES = {};
 
 $_REQUEST = {};
-//$COOKIE = {};
+
+$ExpressSESSION = {};
 
 try {
 
@@ -47,6 +48,7 @@ try {
 
     var bodyParser = require('body-parser');
     var multiparty = require('multiparty');
+    var session = require('express-session')
 
     //Serving static files with Express
     app.use(express.static(env.path.resources));
@@ -55,6 +57,22 @@ try {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(require('cookie-parser')());
     app.use(bodyParser.json());
+
+    //Générérate a uid unique
+    var sess = {
+        secret: 'keyboard cat',
+        saveUninitialized: true,
+        genid: function(req) {
+            return sha1(md5(microtime())+sha1(md5(rand(1, 999999999)))) // use UUIDs for session IDs
+        },
+        resave: false,
+        cookie: {}
+    };
+    if($App.mode == 'prod'){
+        app.set('trust proxy', 1) // trust first proxy
+        sess.cookie.secure = true // serve secure cookies
+    }
+    app.use(session(sess));
 
     if(env.template.toLowerCase() == 'blade'){
         var blade_extends = env.bladeExtends, global = env.global, extendsItem = undefined;
@@ -94,6 +112,16 @@ try {
 
     //
     app.use(function(req, res, next){
+        var session = {};
+
+        session.store = {};
+        session.expires = {};
+        session.id = req.sessionID;;
+
+        $ExpressSESSION = req.session;
+        $ExpressSESSION.session = session;
+
+        //console.log($ExpressSESSION);
         $_REQUEST = {};
         $_FILES = {};
         $_POST = {};
@@ -132,18 +160,46 @@ try {
 
     var type = ['get', 'post', 'delete', 'put', 'all', 'controller'];
 
+    //Remake $Routes with  match value
+    var match = $Routes.match;
+    for(var methods in match){
+        var m = methods.split(',');
+        m = array_map(function(r){
+            return r.trim().toLowerCase();
+        }, m);
 
+        var routes = match[methods];
+        for(var i in m){
+            var method = m[i];
+            if(!$Routes[method]) $Routes[method] = {};
+            for(var val in routes){
+                $Routes[method][val] = routes[val];
+            }
+        }
+    }
+
+
+    var cur = undefined;
     for (var index in type) {
         var method = type[index];
         if ($Routes[method]) {
             var data = $Routes[method];
             if(method != 'controller'){
-                for (var path in data)
-                    app[method](path, data[path]);
+                for (var path in data){
+                    cur = data[path];
+                    if(is_object(cur)) app[method](path, get_filters(cur.before), data[cur.uses]);
+                    else app[method](path, cur);
+                }
             }
             else{
                 for(var preffix in data){
-                    var pathx = undefined, methods = require(env.path.app + '/controllers/'+data[preffix]);
+                    var cur = data[preffix];
+                    var controller = cur, before = '';
+                    if(is_object(cur)){
+                        controller = cur.uses;
+                        before = get_filters(cur.before);
+                    }
+                    var pathx = undefined, callback = undefined, methods = require(env.path.app + '/controllers/'+controller);
 
                     for(var path in methods){
                         if(/^get/.test(path)) method = 'get';
@@ -155,7 +211,26 @@ try {
                         var reg = new RegExp('^'+method, 'i');
                         pathx = preffix+'/'+path.replace(reg, '');
 
-                        if(type.indexOf(method) != -1 && method != 'controller') app[method](pathx, methods[path]);
+                        if(method != 'controller'){
+                            cur = methods[path];
+                            callback = undefined;
+                            if (type.indexOf(method) != -1){
+                                if(is_object(cur)) {
+                                    if(before){
+                                        callback = before;
+                                        callback = array_merge(callback, get_filters(cur.before));
+                                    }
+                                    else callback = $Filters[cur.before];
+                                    app[method](pathx, callback , cur.uses);
+                                }
+                                else{
+                                    if(before)
+                                        app[method](pathx, before, cur);
+                                    else
+                                        app[method](pathx, cur);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -168,6 +243,11 @@ try {
         app.use(favicon($Environement.faveicon));
     }
 
+    exports.start = function(callback){
+        //if database systeme manager exists
+        if($dbsm.ready) $dbsm.ready(callback);
+        else if(callback) callback();
+    };
 
 }
 catch(e){
@@ -177,13 +257,19 @@ catch(e){
 
 }
 
+$Server = server;
+
 var server = app.listen(env.port, function () {
+
+    process.on('uncaughtException', function(err) {
+
+        //console.error(err.stack);
+
+    });
 
     /*
      *
      * Faire tourner autre chose sur l'application
      *
      */
-
 });
-$Server = server;

@@ -4,6 +4,8 @@ module.exports= {
 
     port: 8080,
 
+    token : '_token',
+
     faveicon : "",
 
     /*
@@ -15,7 +17,7 @@ module.exports= {
 
     bladeExtends : ['life.extends.js'],
 
-    global : ['php.js', 'prototype.js', 'dependencies.js'],
+    global : ['php.js', 'prototype.js', 'dependencies.js', 'helpers.js'],
 
     app: {
         name: "Express Life",
@@ -35,7 +37,7 @@ module.exports= {
 
     //DATABASE CONNECTION PARAMS
     database: {
-            default : "",
+            default : "mysql",
             /*
              *
              * default : "mysql",
@@ -96,8 +98,45 @@ module.exports= {
          */
         models                      :__dirname + '/../../app/models',
 
-        app                         :__dirname + '/..',
+        root                        :__dirname + '/../..',
 
-        root                        :__dirname + '/..'
+        app                         :__dirname + '/..'
+    },
+
+    /*
+     |--------------------------------------------------------------------------
+     | Authentification Settings
+     | Password Reminder Settings
+     |--------------------------------------------------------------------------
+     |
+     | The "expire" time is the number of minutes that the reminder should be
+     | considered valid. This security feature keeps tokens short-lived so
+     | they have less time to be guessed. You may change this as needed.
+     |
+     */
+    auth : {
+        model : 'User',
+
+        table : 'user',
+
+        login_colname : 'login',
+
+        email_colname : 'email',
+
+        password_colname : 'password',
+
+        /*
+         * authBy allows to know the columns that will be used to authenticate
+         * login : login will be used only
+         * email : mail is only used
+         * login-email : whichever return the appropriate column will be used to perform authentication
+         */
+        authBy : 'login-email',
+
+        reminder : {
+            table : 'password_reminders',
+
+            expire : 60
+        }
     }
 };

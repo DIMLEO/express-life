@@ -1,0 +1,78 @@
+@extends(layouts/help.blade)
+
+@section(body)
+
+    <h1>The Project configuration</h1>
+        the application config is : ./app/boostrap/app.js
+        <div id = "overview">
+            <h1>OVEVIEW</h1>
+            <ul>
+                <li>
+                    Application evironnement mode, its can be dev for developpement or prod for production<br/>
+                    change the mode value
+                    <textarea name="code" class="jscript" >
+                        module.exports= { \n
+                        mode : "dev", /**** values : dev, prod ****/ \n
+                        ....
+                    </textarea>
+                </li>
+                <li>
+                    Application running port by default is a 8080<br/>
+                    change the port value
+                    <textarea name="code" class="jscript" >
+                        ...\n
+                        \n
+                        port: 8080, \n
+                        .... \n
+                    </textarea>
+                    when you  change the port value dont forget to change the port on the host value
+                    <textarea name="code" class="jscript" >
+                        ...\n
+                        /*\n
+                        * do not forget to change the port in the Host\n
+                        */\n
+                        host : 'http://localhost:8080',\n
+                        ....\n
+                    </textarea>
+                </li>
+                <li>
+                    when you install EBlade extension you must add the name here<br/>
+                    <a href="#">How to add a EBlade extension</a><br/>
+
+                    By exmple if the extension filename is form.js the blade values must be
+                    <textarea name="code" class="jscript" >
+                        ...\n
+                        bladeExtends : ['life.extends.js', 'form.js'],\n
+                        .... \n
+                    </textarea>
+                </li>
+
+            </ul>
+
+        </div>
+        <div id  = "app" >
+            <h1>APPLICATION</h1>
+            <ul>
+                <li>
+                    By default you will find name and version propoerty.<br/>
+                    you can add your own property like that
+                    <textarea name="code" class="jscript" >
+                        ...\n
+                        app: {\n
+                        name: "Express Life",\n
+                        version: "1.0.0",\n
+                        ownProperty : "OwnValue"\n
+                        },\n
+                        ....\n
+                    </textarea>
+                    <a href="#">How can i get my own property</a>
+                </li>
+            </ul>
+        </div>
+        <div id = "path" >
+
+        </div>
+
+@endsection
+
+

@@ -1,0 +1,311 @@
+@extends(layouts/help.blade)
+
+        @section(body)
+<h1>The Anatomy of ELife Framework</h1>
+<h2>The ELife Framework layout</h2>
+<div>
+The layout of a ELife application is standardized to keep things as simple as possible.
+After a npm install successful compile, a Play application looks like this:
+</div>
+<ul id="projet-bones">
+<li>
+    <img src="@asset(images/folder.png)" alt=""/>
+    <a href="#">app
+        <div class="item-role">
+            <span class="pun">→</span>
+                <span>
+                    contains the core code of your application
+                </span>
+        </div>
+    </a>
+    <ul>
+        <li>
+            <img src="@asset(images/folder.png)" alt=""/><a href="">bootstrap
+            <div class="item-role">
+                <span class="pun">→</span>
+                <span>
+                    contient les fichiers requis pour le démarage du projet
+                </span>
+            </div>
+        </a>
+            <ul>
+                <li><img src="@asset(images/file.png)" alt=""/><a href="">app.js
+                    <div class="item-role">
+                        <span class="pun">→</span>
+                        <span>
+                            contient la configuration de votre application
+                        </span>
+                    </div>
+                </a></li>
+                <li><img src="@asset(images/file.png)" alt=""/><a href="">boot.js
+                    <div class="item-role">
+                        <span class="pun">→</span>
+                        <span>
+                            préapre et démare l'application et charge
+                        </span>
+                    </div>
+                </a></li>
+            </ul>
+        </li>
+        <li>
+            <img src="@asset(images/folder.png)" alt=""/><a href="">controllers
+            <div class="item-role">
+                <span class="pun">→</span>
+                    <span>
+                        Application controllers
+                    </span>
+            </div>
+        </a>
+        </li>
+        <li>
+            <img src="@asset(images/folder.png)" alt=""/><a href="">lang
+            <div class="item-role">
+                <span class="pun">→</span>
+                    <span>
+                        Application Internationnalisation container
+                    </span>
+            </div>
+        </a>
+            <ul>
+                <li><img src="@asset(images/folder.png)" alt=""/><a href="#">en</a></li>
+                <li><img src="@asset(images/file.png)" alt=""/><a href="#">lang.js
+                    <div class="item-role">
+                        <span class="pun">→</span>
+                    <span>
+                        Application Langue manager
+                    </span>
+                    </div>
+                </a></li>
+            </ul>
+        </li>
+        <li>
+            <img src="@asset(images/folder.png)" alt=""/><a href="">models
+            <div class="item-role">
+                <span class="pun">→</span>
+                    <span>
+                        Application database layer
+                    </span>
+            </div>
+        </a>
+        </li>
+        <li>
+            <img src="@asset(images/folder.png)" alt=""/><a href="">required
+            <div class="item-role">
+                <span class="pun">→</span>
+                    <span>
+                        Application dependencies
+                    </span>
+            </div>
+        </a>
+            <ul>
+                <li><img src="@asset(images/folder.png)" alt=""/><a href="#">blade.extends
+                    <div class="item-role">
+                        <span class="pun">→</span>
+                    <span>
+                        EBlade extends
+                    </span>
+                    </div>
+                </a></li>
+                <li><img src="@asset(images/folder.png)" alt=""/><a href="#">global
+                    <div class="item-role">
+                        <span class="pun">→</span>
+                    <span>
+                        Global variables or functions
+                    </span>
+                    </div>
+                </a></li>
+            </ul>
+        </li>
+        <li>
+            <img src="@asset(images/folder.png)" alt=""/><a href="">storage
+            <div class="item-role">
+                <span class="pun">→</span>
+                    <span>
+                        Application other files storage like private file uploads
+                    </span>
+            </div>
+        </a>
+            <ul>
+                <li>
+                    <img src="@asset(images/folder.png)" alt=""/><a href="#">database
+                    <div class="item-role">
+                        <span class="pun">→</span>
+                    <span>
+                        Application database file
+                    </span>
+                    </div>
+                </a>
+                    <ul>
+                        <li><img src="@asset(images/folder.png)" alt=""/><a href="#">backup
+                            <div class="item-role">
+                                <span class="pun">→</span>
+                    <span>
+                        Application database backup
+                    </span>
+                            </div>
+                        </a></li>
+                        <li><img src="@asset(images/folder.png)" alt=""/><a href="#">models
+                            <div class="item-role">
+                                <span class="pun">→</span>
+                    <span>
+                        Application models class
+                    </span>
+                            </div>
+                        </a></li>
+                    </ul>
+                </li>
+                <li><img src="@asset(images/folder.png)" alt=""/><a href="#">tmp
+                    <div class="item-role">
+                        <span class="pun">→</span>
+                    <span>
+                        Application uploads temp file folder
+                    </span>
+                    </div>
+                </a></li>
+                <li><img src="@asset(images/folder.png)" alt=""/><a href="#">views
+                    <div class="item-role">
+                        <span class="pun">→</span>
+                    <span>
+                        Applicationv views rewrite as js module file
+                    </span>
+                    </div>
+                </a></li>
+            </ul>
+        </li>
+        <li>
+            <img src="@asset(images/folder.png)" alt=""/><a href="">views
+            <div class="item-role">
+                <span class="pun">→</span>
+                    <span>
+                        Application view file as HTML And Blade file
+                    </span>
+            </div>
+        </a>
+        </li>
+        <li>
+            <img src="@asset(images/file.png)" alt=""/><a href="">filters.js
+            <div class="item-role">
+                <span class="pun">→</span>
+                    <span>
+                        Application Filters
+                    </span>
+            </div>
+        </a>
+        </li>
+        <li>
+            <img src="@asset(images/file.png)" alt=""/><a href="">routes.js
+            <div class="item-role">
+                <span class="pun">→</span>
+                    <span>
+                        Application routes
+                    </span>
+            </div>
+        </a>
+        </li>
+    </ul>
+</li>
+<li>
+    <img src="@asset(images/folder.png)" alt=""/><a href="#">resources
+    <div class="item-role">
+        <span class="pun">→</span>
+                    <span>
+                        Application front-end files
+                    </span>
+    </div>
+</a>
+    <ul>
+        <li><img src="@asset(images/folder.png)" alt=""/><a href="#">css
+            <div class="item-role">
+                <span class="pun">→</span>
+                    <span>
+                        Application Css files
+                    </span>
+            </div>
+        </a></li>
+        <li><img src="@asset(images/folder.png)" alt=""/><a href="#">images
+            <div class="item-role">
+                <span class="pun">→</span>
+                    <span>
+                        Application Images files
+                    </span>
+            </div>
+        </a></li>
+        <li><img src="@asset(images/folder.png)" alt=""/><a href="#">script
+            <div class="item-role">
+                <span class="pun">→</span>
+                    <span>
+                        Application Script files
+                    </span>
+            </div>
+        </a></li>
+    </ul>
+</li>
+<li>
+    <img src="@asset(images/file.png)" alt=""/>
+    <a href="#">.bowerrc
+
+        <div class="item-role">
+            <span class="pun">→</span>
+                    <span>
+                        told bower where lace the packer js
+                    </span>
+        </div>
+    </a>
+</li>
+<li>
+    <img src="@asset(images/file.png)" alt=""/>
+    <a href="#">index.js
+        <div class="item-role">
+            <span class="pun">→</span>
+                    <span>
+                        lunch Application
+                    </span>
+        </div>
+    </a>
+</li>
+</ul>
+    <div>
+        <h1>More description</h1>
+    </div>
+<style>
+#projet-bones {
+    max-width: 700px;
+}
+
+#projet-bones li {
+    list-style-type: none;
+}
+
+#projet-bones ul {
+    padding-left: 15px;
+    border-left: 1px dotted #696969;
+    padding-bottom: 8px;
+}
+
+#projet-bones img {
+    height: 16px;
+    display: inline-block;
+    margin-right: 7px;
+}
+
+#projet-bones a {
+    text-decoration: none;
+    color: #7F8C8D;
+}
+
+#projet-bones a:hover {
+    color: #C0392B;
+}
+
+#projet-bones li {
+    /*border-left: 1px dotted red;*/
+}
+
+.item-role {
+    display: inline-block;
+    background: #F7F7F7;
+    float: right;
+    width: 450px;
+}
+</style
+        @endsection
