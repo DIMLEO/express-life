@@ -203,32 +203,32 @@ boot.start(function(){
      
 ## bower
 
-    if bower is not install in your computer
-    
-    ```bash
-        npm install bower
-    ```
+if bower is not install in your computer
+
+```bash
+	npm install bower
+```
     
 ## Exemple with Angular
     
-    ```bash
-        cd <project path>
-        bower install angular
-    ```
-    
-    and in the views you can write 
-    
-    ```html
-        <html>
-            <head>
-            
-            </head>
-            <body>
-            
-            @bower(angular) <!-- write <script type = "text/javascript" src = "{{url to angular main js}}" ></script> -->
-            </body>
-        </html>
-    ```
+```bash
+	cd <project path>
+	bower install angular
+```
+
+and in the views you can write 
+
+```html
+	<html>
+		<head>
+		
+		</head>
+		<body>
+		
+		@bower(angular) <!-- write <script type = "text/javascript" src = "{{url to angular main js}}" ></script> -->
+		</body>
+	</html>
+```
 
   
 ## Features
