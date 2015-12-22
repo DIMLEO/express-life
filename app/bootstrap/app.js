@@ -37,7 +37,7 @@ module.exports= {
 
     //DATABASE CONNECTION PARAMS
     database: {
-            default : "mysql",
+            default : "",
             /*
              *
              * default : "mysql",

@@ -64,6 +64,12 @@ if(!function_exists('url')){
         return $Environement.host+'/'+path;
     };
 }
+if(!function_exists('get_real_function')){
+    get_real_function = function(fnc){
+        if(fnc.length >= 2) return fnc;
+        return function(req, res, next){res.send(fnc()); };
+    };
+}
 if(!function_exists('get_filters')){
     get_filters = function(filters){
         var vfilters = [];

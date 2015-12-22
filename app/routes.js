@@ -37,10 +37,17 @@ module.exports = function(View, Env, Filre){
         },
         '/far' : {
             before : 'auth',
-            uses : function(req, res){
-                res.send('Hello Word on Far');
+            uses : function(){
+                //When you d'ont use req and res params
+                //you must return somme value
+                return 'Hello Word';
             }
-        }
+        },
+        '/for' :  function(){
+                //When you d'ont use req and res params
+                //you must return somme value
+                return 'Hello Word';
+            }
     };
 
     routes.controller = {

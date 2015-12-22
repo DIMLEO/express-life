@@ -181,14 +181,15 @@ try {
 
     var cur = undefined;
     for (var index in type) {
+        if(type.indexOf(method) == -1) continue;
         var method = type[index];
         if ($Routes[method]) {
             var data = $Routes[method];
             if(method != 'controller'){
                 for (var path in data){
                     cur = data[path];
-                    if(is_object(cur)) app[method](path, get_filters(cur.before), data[cur.uses]);
-                    else app[method](path, cur);
+                    if(is_object(cur)) app[method](path, get_filters(cur.before), get_real_function(cur.uses));
+                    else app[method](path, get_real_function(cur));
                 }
             }
             else{
@@ -221,13 +222,13 @@ try {
                                         callback = array_merge(callback, get_filters(cur.before));
                                     }
                                     else callback = $Filters[cur.before];
-                                    app[method](pathx, callback , cur.uses);
+                                    app[method](pathx, callback , get_real_function(cur.uses));
                                 }
                                 else{
                                     if(before)
-                                        app[method](pathx, before, cur);
+                                        app[method](pathx, before, get_real_function(cur));
                                     else
-                                        app[method](pathx, cur);
+                                        app[method](pathx, get_real_function(cur));
                                 }
                             }
                         }
