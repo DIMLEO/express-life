@@ -209,7 +209,7 @@ boot.start(function(){
 ## Exemple with Angular
     
     ```bash
-        cd <project name>
+        cd <project path>
         bower install angular
     ```
     
@@ -241,6 +241,10 @@ boot.start(function(){
   * Aside automatic update tables when the exchange models
   * language management for internationalization
 
+  
+  
+## Commit && Push
+	all changes or proposals are welcome
 
 
 ## License
