@@ -50,7 +50,7 @@ module.exports = function(View, Env, Filre){
         '/foo' : {
             before : 'auth',
             uses : function(req, res){
-                               
+                              res.send('Hello Word'); 
                      }
         }
     };
@@ -58,7 +58,7 @@ module.exports = function(View, Env, Filre){
     //Exmeple with all
     routes.all = {
         '/index': function (req, res) {
-            //you must create the file index.blade
+            //you must create the file index.blade in the views folder
             res.send(
                 View.make('index.blade', {
                         lname : "ELIFE",
@@ -97,7 +97,7 @@ module.exports = function(View, Env, Filre){
         }
     }
     .....
-```js
+```
 
 
 ## index.js
