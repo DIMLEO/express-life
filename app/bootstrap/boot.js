@@ -102,7 +102,7 @@ try {
     $Validation.mk = $Validation.make;
     $Validation.mkLastLg = undefined;
     $Validation.make = function(rules, data){
-        var v = $Validation.mk(rules, data);
+        var v = $Validation.mk(data, rules);
         if($Validation.mkLastLg != $Lang.lang()) {
             $Validation.mkLastLg = $Lang.lang();
             v.mergeMessage($Lang.get('validator'));
