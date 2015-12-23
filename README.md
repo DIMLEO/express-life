@@ -230,6 +230,51 @@ and in the views you can write
 	</html>
 ```
 
+## DBSM(Database Systeme manager) Exemple
+
+```js
+    //$dbsm is use to compile a database query
+    $dbsm.sql({
+		query : 'SELECT 25*25 as result',
+		succes : function(rows, fields){
+			//rows is array who contain all result
+			//fields all fields name
+			
+			console.log('rows', rows);
+			console.log('fields', fields);
+		}
+	});
+```
+
+## Model Exemple
+
+```js
+	//if your models folder contain a user.js
+	//your can use directly $User
+	//or you can create a new instance of user
+	//var myUser = new User();
+	
+    //Exemple with regexp
+	var myUser = new User;
+	
+	//fname : /abc/ <==> fname LIKE '%abc%'
+	//fname : /^abc/ <==> fname LIKE 'abc%'
+	//fname : /abc$/ <==> fname LIKE '%abc'
+	//fname : /^abc$/ <==> fname LIKE 'abc'
+	myUser.where({lname : /abc/, fname : /abc/})
+		  .get(function(){
+				if(this.rowsCount() > 0){
+					console.log(this.toJson()); //get current element as json
+					//console.log(this.toJson(true)); //get all result as array containt who contain all rows
+					//or
+					/*
+						this.each(function(index){
+							this.toJson(); //get current row
+						});
+					*/
+				}
+		  });
+```
   
 ## Features
 
