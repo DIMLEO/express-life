@@ -20,7 +20,7 @@ module.exports = {
     get : function(pack, key){
         try {
             if (!key) return require('./' + this.lang() + '/' + pack);
-            return require('./' + this.lang + '/' + pack)[key];
+            return require('./' + this.lang() + '/' + pack)[key];
         }catch(e){
             throw e;
         }

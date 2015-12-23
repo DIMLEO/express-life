@@ -1,0 +1,1 @@
+User is not defined<br> &nbsp; &nbsp;at Object.module.exports.attempt (F:\Project\SMelo\node_modules\elife-dim\Auth\Auth.js:52:29)
