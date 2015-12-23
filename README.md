@@ -242,6 +242,9 @@ and in the views you can write
 			
 			console.log('rows', rows);
 			console.log('fields', fields);
+		},
+		error : function(err){
+			throw err;
 		}
 	});
 ```
