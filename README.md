@@ -1,6 +1,6 @@
 ﻿# elife extends express
 
-[![Build Status] Alpha Release]
+[![Build Status] (Alpha Release)]
 
 NodeJs Web Framework  [node](http://nodejs.org).
 
