@@ -9,7 +9,7 @@ module.exports = function(View, Env, Filre){
 
 	//a simple hello word
     routes.get = {
-        '/': function () {
+        '/': function(){
 			return 'Hello Word!';
         }
     };
