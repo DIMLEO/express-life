@@ -51,10 +51,11 @@ exemple if your extension name is exmple.js the values of bladeExtends property 
 ### global
 it serves to include files providing global function or to perform actions before launching the server
 by default 
-	* php.js  			included the usual functions of php
-	* prototype.js		.....
-	* dependencies.js	currently this file manages the database (creation of models, tables, etc ...)
-	* helpers.js		contains functions
+
+  * php.js  			included the usual functions of php
+  * prototype.js		.....
+  * dependencies.js	currently this file manages the database (creation of models, tables, etc ...)
+  * helpers.js		contains functions
 
 ```js
 global : ['php.js', 'prototype.js', 'dependencies.js', 'helpers.js'],
