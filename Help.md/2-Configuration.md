@@ -1,5 +1,5 @@
 
-## Configuration
+# Configuration
 
 Currently there is only one configuration file
 

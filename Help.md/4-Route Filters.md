@@ -42,6 +42,24 @@ module.exports = {
 };
 ```
 
+## Filter callback with parameter
+default filters do not take parameters.
+if you want to use asynchronous features in filters or use the functions of the object request or response object, then it is advisable to retrieve three parameters (request, response, next)
+
+ * the next call allows the application has passed the next step
+ * the next call is mandatory, in case it does not make the application will run in a loop
+
+
+```js
+	filter : function(req, res, next){
+		asynchronous({...}, function(){
+			//dont forget to call next
+			next();
+		});
+	},
+	....
+```
+
 ## Attaching A Filter To A Route
 
 ```js
@@ -72,13 +90,4 @@ module.exports = {
 					uses: 'controllerName'
 				}
     };
-```
-## Filter Classes
-
-For advanced filtering, you may wish to use a class instead of a Closure. Since filter classes are resolved out of the application,
-you can use the global variale $Filters
-```js
-```
-
-```js
 ```

@@ -1,5 +1,5 @@
 
-## Routing
+# Routing
 
 Most of the routes for your application will be defined in the app/routes.js file. The simplest ELife routes consist of a URI and a Closure callback.
 
