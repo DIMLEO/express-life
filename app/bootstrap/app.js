@@ -29,7 +29,7 @@ module.exports= {
         //if fromSession not empty it will be used to load the language package
         //if fromSession d'ont exist default will be used
         //if any pack exist you will be have a beauty error
-        //if this.from is
+        //if this.fromOther is
         default: "en",
         fromSession : "",
         fromOther : ""//must be a function if required
@@ -37,11 +37,12 @@ module.exports= {
 
     //DATABASE CONNECTION PARAMS
     database: {
-            default : "",
+            default : "mysql",
             /*
              *
              * default : "mysql", "sqlite"
 			 * psql is not support for the moment
+			 * suffix is not actualy used
              *
              */
             connections : {
@@ -50,7 +51,7 @@ module.exports= {
                     host : "127.0.0.1",
                     user: "root",
                     password:"",
-                    name: "express_life",
+                    name: "africa_melo",
                     port: "3306",
                     suffix : ""
                 },
@@ -119,9 +120,9 @@ module.exports= {
      |
      */
     auth : {
-        model : 'User',
+        model : 'Utilisateurs',
 
-        table : 'user',
+        table : 'ltilisateurs',
 
         login_colname : 'login',
 
@@ -136,6 +137,17 @@ module.exports= {
          * login-email : whichever return the appropriate column will be used to perform authentication
          */
         authBy : 'login-email',
+
+        /*
+         * the time_limit_after_attempt is the number of time during which the client can no longer connect
+         * his ip address will be automatically added to the blacklist during the set time
+         *
+         * not implement for the moment
+         */
+
+        nb_attempt : 5,
+
+        time_limit_after_attempt : 15,
 
         reminder : {
             table : 'password_reminders',

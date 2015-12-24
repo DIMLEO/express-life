@@ -187,6 +187,7 @@ try {
             var data = $Routes[method];
             if(method != 'controller'){
                 for (var path in data){
+                    if(!(/^\//).test(path)) pathx = '/'+path;
                     cur = data[path];
                     if(is_object(cur)) app[method](path, get_filters(cur.before), get_real_function(cur.uses));
                     else app[method](path, get_real_function(cur));
@@ -211,6 +212,7 @@ try {
 
                         var reg = new RegExp('^'+method, 'i');
                         pathx = preffix+'/'+path.replace(reg, '');
+                        if(!(/^\//).test(pathx)) pathx = '/'+pathx;
 
                         if(method != 'controller'){
                             cur = methods[path];
