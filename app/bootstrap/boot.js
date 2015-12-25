@@ -36,6 +36,8 @@ $_FILES = {};
 
 $_REQUEST = {};
 
+$_RESPONSE = {};
+
 $ExpressSESSION = {};
 
 try {
@@ -121,7 +123,9 @@ try {
         $ExpressSESSION = req.session;
         $ExpressSESSION.session = session;
 
+        $_RESPONSE = res;
         //console.log($ExpressSESSION);
+        $_REQUEST = req;
         $_REQUEST = {};
         $_FILES = {};
         $_POST = {};
@@ -155,7 +159,6 @@ try {
                 next();
             });
         }
-        $_REQUEST = req;
     });
 
     var type = ['get', 'post', 'delete', 'put', 'all', 'controller'];

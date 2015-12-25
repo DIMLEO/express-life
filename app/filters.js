@@ -6,11 +6,14 @@ module.exports = {
         }
     },
     auth : function(){
-        if(!$Auth.check()) {
-
-            throw new Error('Required Authentification');
-            //or
-            //res.redirect(url('/'));
+        if($Auth.guest()) {
+            if($Auth.guest){
+                if($Request.ajax()){
+                    hs401('Authentication is required for this action');
+                }else{
+                    res.redirect('/login');
+                }
+            }
         }
     }
 };
