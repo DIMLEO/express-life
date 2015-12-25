@@ -424,8 +424,3 @@ This status code is not specified in any RFCs, but is used by Microsoft HTTP pro
 if the msg is defined, msg equal to  Network connect timeout error .
 
 This status code is not specified in any RFCs, but is used by Microsoft HTTP proxies to signal a network connect timeout behind the proxy to a client in front of the proxy.[citation needed][88]
-
-## hsundefined(msg)
-if the msg is defined, msg equal to 103 checkpoint.
-
-Used in the resumable requests proposal to resume aborted PUT or POST requests
