@@ -209,9 +209,10 @@ try {
                         else if(/^delete/.test(path)) method = 'delete';
                         else if(/^put/.test(path)) method = 'put';
                         else if(/^all/.test(path)) method = 'all';
+                        //else method = 'post';
 
                         var reg = new RegExp('^'+method, 'i');
-                        pathx = preffix+'/'+path.replace(reg, '');
+                        pathx = preffix+'/'+path.replace(reg, '').trim();
                         if(!(/^\//).test(pathx)) pathx = '/'+pathx;
 
                         if(method != 'controller'){

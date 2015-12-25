@@ -120,6 +120,9 @@ module.exports= {
      |
      */
     auth : {
+		/*
+		 * the first character is uppercase
+		 */
         model : 'Utilisateurs',
 
         table : 'ltilisateurs',
@@ -128,6 +131,10 @@ module.exports= {
 
         email_colname : 'email',
 
+		/*
+		 * min char: 60
+		 * exemple: varchar(x) x >= 60
+		 */
         password_colname : 'password',
 
         /*
