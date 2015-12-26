@@ -12,6 +12,7 @@ auth : function(req,res, next){
 				res.redirect('/login');
 			}
 		}
+		next();
 	}
 
 ```
