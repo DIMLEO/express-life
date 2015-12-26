@@ -5,7 +5,7 @@ Exemple with filters:
 ```js
 
 auth : function(req,res, next){
-		if($Auth.guest){
+		if($Auth.guest()){
 			if($Request.ajax()){
 				hs401('Authentication is required for this action');
 			}else{
