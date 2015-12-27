@@ -1,6 +1,8 @@
 module.exports= {
 
     mode : "dev", /**** values : dev, prod ****/
+	
+    debug : true,
 
     port: 8080,
 

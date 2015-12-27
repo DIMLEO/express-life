@@ -264,15 +264,16 @@ catch(e){
 
 }
 
+if(env.debug){
+    app.use(function (err, req, res, next) {
+        require('elif-dim/errorhandler')(err, req, res, next);
+        return false;
+    });
+}
+
 $Server = server;
 
 var server = app.listen(env.port, function () {
-
-    process.on('uncaughtException', function(err) {
-
-        console.error(err.stack);
-
-    });
 
     /*
      *
